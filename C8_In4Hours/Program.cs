@@ -6,7 +6,7 @@ namespace C8_In4Hours
     {
         static void Main(string[] args)
         {
-            // Hi there
+            // Hi there, hey
             Console.WriteLine("Hello World!");
         }
     }
