@@ -9,6 +9,13 @@ namespace C8_In4Hours
     /// </summary>
     class Section1
     {
+        /* Notes
+        .NET framework (year 2000)
+	    Presentation 			        - Web apps (ASP.NET), Win Forms, WPF
+	    Framework class libraries 	    - strings, arrays
+	    CLR (common language runtime) 	- JIT compiler, Garbage collection, Exeption handling, security
+         */
+
         /// <summary> Prints "Hello World!"
         /// </summary>
         public void PrintHello()
