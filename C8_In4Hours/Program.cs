@@ -4,38 +4,49 @@ namespace C8_In4Hours
 {
     class Program
     {
+        public static Section1 S1 = new Section1();
+        public static Section2 S2 = new Section2();
+        public static Section3 S3 = new Section3();
+        public static Section4 S4 = new Section4();
+        public static Section5 S5 = new Section5();
+        public static Section6 S6 = new Section6();
+
+        // Question - Struct?
+        // Question - uses of string.empty
+        // Question - valid uses of stringbuilder
+        // Question - "Interpolation"
+
+        // Tips - use $: Console.WriteLine($"Name: {name}, Age: {age}");
+        // C# use "ref" keyword for direct reference to variable instead of copies
+
+        // Build/ Compile, CLR(JIT), MSIL, Machine Language
+
         static void Main(string[] args)
         {
-            // Question - Struct?
-            // Question - uses of string.empty
-            // Question - valid uses of stringbuilder
-            // Question - "Interpolation"
-
-            // Tips - use $: Console.WriteLine($"Name: {name}, Age: {age}");
-            // C# use "ref" keyword for direct reference to variable instead of copies
-
-            // Build/ Compile, CLR(JIT), MSIL, Machine Language
-
             // Section 1 = Intro
-            var S1 = new Section1();
             S1.PrintHello();
 
-            // Section 2 = Logic - // Current vid = 2.2
-            var S2 = new Section2();
-            S2.PrintHello();
-            // TODO = tidy S2
+            // Section 2 = Logic
+            S2.PrintHello(); // TODO = tidy S2
 
-            // Section 3 = Methods
+            // Section 3 = Methods  - // Current vid = 3.1
+            S3.PrintHello();
+
+
+
             // Section 4 = OOP
+            S4.PrintHello();
+
             // Section 5 = Concepts
+            S5.PrintHello();
+
             // Section 6 = Project
+            S6.PrintHello();
         }
 
         // Lessons from Section 1
         public void S1_Methods()
         {
-            // S1
-            var S1 = new Section1();
             S1.PrintHello();
             S1.ReadUser();
             S1.Lesson1_6();
@@ -46,40 +57,47 @@ namespace C8_In4Hours
         // Lessons from Section 2
         public void S2_Methods()
         {
-            //var S2 = new Section2();
-            //S2.
+            S2.Lesson2_1();
+            S2.Lesson2_1_2 ();
+            S2.Lesson2_1_3();
+            S2.Lesson2_2();
+            S2.Lesson2_2_2();
+            S2.Lesson2_3();
+            S2.Lesson2_4();
         }
 
-        /*Section 3. Basics 3
-	        Methods, Enum and Exceptions
-        3.1 Enum, parse string
-        3.2 Methods, return, out, params
-        3.3 Debugging/ Exceptions, break points, step over, Try Catch*/
+        public void S3_Methods()
+        {
+            //S3.Lesson3_1();
+            //S3.Lesson3_2();
+            //S3.Lesson3_3();
+        }
 
-        /*Section 4. OOP 1
-	        Object-Oriented Programming in C#
-        4.1 Encapsulation, classes, objects, data members, properties
-        4.2 Inheritance, child classes, base classes
-        4.3 Abstraction, override
-        4.4 Polymorphism, interface vs abstract
-        4.5 Concepts Related to Object Oriented Programming
-	        Read-only, constants, protected, partial, static classes*/
+        public void S4_Methods()
+        {
+            //S4.Lesson4_1();
+            //S4.Lesson4_2();
+            //S4.Lesson4_3();
+            //S4.Lesson4_4();
+            //S4.Lesson4_5();
+        }
 
-        /*Section 5: Concepts 1
-	        Advanced Programming Concepts in C#
-        5.1 Assemblies, Exe, DLL, class library
-        5.2 Nullable/ Anonymous Types, var
-        5.3 Delegates and Multicast Delegates, pass method as param
-        5.4 Anonymous Methods and Lambda Expressions
-	        In-line anonymous method
-        5.5 Generics and Events, Gen vs Array
-        5.6 Asynchronous Programming, Await Win Forms*/
+        public void S5_Methods()
+        {
+            //S5.Lesson5_1();
+            //S5.Lesson5_2();
+            //S5.Lesson5_3();
+            //S5.Lesson5_4();
+            //S5.Lesson5_5();
+            //S5.Lesson5_6();
+        }
 
-        /*Section 6: Project 1
-	        Win Form Project in C#
-        6.1 Requirement, design
-        6.2 UI, controls, buttons
-        6.3 Business Logic Implementation, Architecture, OOP
-        6.4 Events in Win Form Project*/
+        public void S6_Methods()
+        {
+            //S6.Lesson6_1();
+            //S6.Lesson6_2();
+            //S6.Lesson6_3();
+            //S6.Lesson6_4();
+        }
     }
 }

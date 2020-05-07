@@ -5,7 +5,7 @@ using System.Text;
 namespace C8_In4Hours
 {
     /// <summary>
-    /// Hello World, read user input, basic syntax, types and variables, arithmetic operators,
+    /// Strings - maniuplate strings, loops, arrays
     /// </summary>
     class Section2
     {
