@@ -9,7 +9,11 @@ namespace C8_In4Hours
             // Question - Struct?
             // Question - uses of string.empty
             // Question - valid uses of stringbuilder
-            
+            // Question - "Interpolation"
+
+            // Tips - use $: Console.WriteLine($"Name: {name}, Age: {age}");
+            // C# use "ref" keyword for direct reference to variable instead of copies
+
             // Build/ Compile, CLR(JIT), MSIL, Machine Language
 
             // Section 1 = Intro
@@ -18,9 +22,9 @@ namespace C8_In4Hours
 
             // Section 2 = Logic - // Current vid = 2.2
             var S2 = new Section2();
-            S2.PrintHello(); // Hello World
-            S2.Lesson2_1_2();
-            S2.Lesson2_1_3();
+            S2.PrintHello();
+            // TODO = tidy S2
+
             // Section 3 = Methods
             // Section 4 = OOP
             // Section 5 = Concepts
