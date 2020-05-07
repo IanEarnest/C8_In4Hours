@@ -25,6 +25,7 @@ namespace C8_In4Hours
         {
             // Section 1 = Intro
             S1.PrintHello();
+            //S1_Methods();
 
             // Section 2 = Logic
             S2.PrintHello(); // TODO = tidy S2
@@ -45,7 +46,7 @@ namespace C8_In4Hours
         }
 
         // Lessons from Section 1
-        public void S1_Methods()
+        public static void S1_Methods()
         {
             S1.PrintHello();
             S1.ReadUser();
@@ -55,7 +56,7 @@ namespace C8_In4Hours
         }
 
         // Lessons from Section 2
-        public void S2_Methods()
+        public static void S2_Methods()
         {
             S2.Lesson2_1();
             S2.Lesson2_1_2 ();
@@ -66,14 +67,14 @@ namespace C8_In4Hours
             S2.Lesson2_4();
         }
 
-        public void S3_Methods()
+        public static void S3_Methods()
         {
             //S3.Lesson3_1();
             //S3.Lesson3_2();
             //S3.Lesson3_3();
         }
 
-        public void S4_Methods()
+        public static void S4_Methods()
         {
             //S4.Lesson4_1();
             //S4.Lesson4_2();
@@ -82,7 +83,7 @@ namespace C8_In4Hours
             //S4.Lesson4_5();
         }
 
-        public void S5_Methods()
+        public static void S5_Methods()
         {
             //S5.Lesson5_1();
             //S5.Lesson5_2();
@@ -92,7 +93,7 @@ namespace C8_In4Hours
             //S5.Lesson5_6();
         }
 
-        public void S6_Methods()
+        public static void S6_Methods()
         {
             //S6.Lesson6_1();
             //S6.Lesson6_2();
