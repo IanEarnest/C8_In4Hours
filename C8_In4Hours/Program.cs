@@ -18,6 +18,7 @@ namespace C8_In4Hours
 
         // Tips - use $: Console.WriteLine($"Name: {name}, Age: {age}");
         // C# use "ref" keyword for direct reference to variable instead of copies
+        // cw - shorthand
 
         // Build/ Compile, CLR(JIT), MSIL, Machine Language
 

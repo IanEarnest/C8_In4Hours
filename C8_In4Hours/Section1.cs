@@ -72,7 +72,7 @@ namespace C8_In4Hours
             // Comments     = // /**/
         }
 
-        // Part of Lesson1_6_2
+        /// <summary>Part of Lesson1_6_2 </summary>
         struct Customer
         {
             public int age;

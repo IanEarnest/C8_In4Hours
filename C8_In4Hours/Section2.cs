@@ -5,13 +5,38 @@ using System.Text;
 namespace C8_In4Hours
 {
     /// <summary>
-    /// Strings - maniuplate strings, loops, arrays
+    /// Strings - manipulate strings, if, loops, arrays
     /// </summary>
     class Section2
     {
         /* Notes
-        A
-         */
+        String.Empty
+        "/n" = new line
+        myString.IndexOf("lost")); // .IndexOf (-1 = not there)
+        StringBuilder sb = new StringBuilder();
+            sb.Append(myString1);
+
+        // String formatting
+        Console.WriteLine($"Name: {name}, Age: {age}");
+        Console.WriteLine(String.Format("Name: {0}, Age: {1}", name, age));
+        Console.WriteLine($"Date: {todaysDate:d}, Time: {todaysDate:t}");
+
+        // Continue/ Break
+        continue;   //  skips one iteration of the loop
+        break;      //  exits loop
+
+        // GOTO
+        start:      
+        goto start;
+
+        // Array
+        int length = Convert.ToInt32(Console.ReadLine());
+        int[] myArray = new int[length]; // Int array
+
+        // Print Array
+        Console.WriteLine($"sorted (manual): {string.Join(",", myArray)}");
+        Console.Write($"{i} = {myArray[i]}, "); // e.g. 0 = 23, 1 = 15,
+        */
 
 
         /// <summary> Prints "Hello World!"
@@ -24,7 +49,8 @@ namespace C8_In4Hours
 
 
 
-        //2.1 Strings - maniuplate strings
+        /// <summary> Strings - maniuplate strings/ printing
+        /// </summary>
         public void Lesson2_1()
         {
             // Character and String - '' = character, "" = string
@@ -60,7 +86,9 @@ namespace C8_In4Hours
             Console.WriteLine("Line 1, \\ Line 2");
         }
 
-        // Strings - methods, concatenation
+        
+        /// <summary> Strings - methods, concatenation, StringBuilder
+        /// </summary>
         public void Lesson2_1_2()
         {
             // String Methods
@@ -91,7 +119,9 @@ namespace C8_In4Hours
             Console.WriteLine("myString4 = " + myString4);
         }
 
-        // Strings - Interpolation, string formatting
+        /// <summary> Strings - Interpolation, string formatting
+        /// <para>    name and age</para>
+        /// </summary> 
         public void Lesson2_1_3()
         {
             string name;
@@ -117,8 +147,9 @@ namespace C8_In4Hours
         }
 
 
-        //2.2 If/ Else, switch
-        // >, >=, <, <=, ==, ||, &&, !, !=
+        /// <summary>If/ Else, switch
+        /// <para>    >, >=, <, <=, ==, ||, &&, !, !=</para>
+        /// </summary>
         public void Lesson2_2()
         {
             bool condition1 = true;
@@ -149,11 +180,12 @@ namespace C8_In4Hours
             {
                 Console.WriteLine("True");
             }
-
-            
         }
-        
-        // Switch statement
+
+
+        /// <summary>Switch statement
+        /// <para>"Yes" prints YES</para>
+        /// </summary>
         public void Lesson2_2_2()
         {
             string state = Console.ReadLine().ToUpper();
@@ -167,7 +199,10 @@ namespace C8_In4Hours
             }
         }
 
-        //2.3 For loop, break, goto
+
+        /// <summary>For loop, break, goto
+        /// <para>restarts on any key</para>
+        /// </summary>
         public void Lesson2_3()
         {
             restart:
@@ -233,7 +268,10 @@ namespace C8_In4Hours
             }
         }
 
-        //2.4 Arrays, For loop, sort
+
+        /// <summary>Arrays, For loop, sort, string.join
+        /// <para>user inputs array length and elements</para>
+        /// </summary>
         public void Lesson2_4()
         {
             // Enter array length
