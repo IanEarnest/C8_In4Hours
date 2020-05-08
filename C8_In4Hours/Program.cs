@@ -11,7 +11,7 @@ namespace C8_In4Hours
         public static Section5 S5 = new Section5();
         public static Section6 S6 = new Section6();
 
-        // Question - Struct?
+        // Question - Struct? vs enum?
         // Question - uses of string.empty
         // Question - valid uses of stringbuilder
         // Question - "Interpolation"
@@ -20,6 +20,10 @@ namespace C8_In4Hours
         // C# use "ref" keyword for direct reference to variable instead of copies
         // cw - shorthand
 
+        // Ideas - sorting Arrays (myArray.Sort(myArray, highestFirst))
+        // Todo list - easy
+        // Email client - class (send email, inbox, mail has address, from, header, body)
+        // Trip planner - store Hotel reservations tickets, weblinks, important phone numbers, addresses of places to visit and restaurants
         // Build/ Compile, CLR(JIT), MSIL, Machine Language
 
         static void Main(string[] args)
@@ -33,6 +37,9 @@ namespace C8_In4Hours
 
             // Section 3 = Methods  - // Current vid = 3.1
             S3.PrintHello();
+
+            S3.Lesson3_3();
+
 
 
 
