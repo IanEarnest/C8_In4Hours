@@ -52,7 +52,7 @@ namespace C8_In4Hours
             South = 1,
             West = 7
         }
-        /// <summary> Enum, parse string
+        /// <summary> Enum, parse string, foreground colour
         /// </summary>
         public void Lesson3_1()
         {
@@ -103,7 +103,8 @@ namespace C8_In4Hours
             j[0] = 17;
             Console.WriteLine($"\tPrint (params2): {j[0]}");
         }
-        ///<summary>3.2 Methods, return, ref, out, in, params, params by value/ reference
+        ///<summary> Methods, return, ref, out, in, params, params by value/ reference
+        ///<para>   Uses Add, MethodByVal, MethodByRef, MethodByOut, MethodByIn, MethodByParams</para>
         ///</summary>
         public void Lesson3_2()
         {
@@ -154,7 +155,8 @@ namespace C8_In4Hours
         }
 
 
-        ///<summary>3.3 Debugging/ Exceptions, break points, step over, Try Catch
+        ///<summary> Debugging/ Exceptions, break points, step over, Try Catch
+        ///<para>   Contains break point</para>
         ///</summary>
         public void Lesson3_3()
         {
@@ -173,19 +175,10 @@ namespace C8_In4Hours
                 int c = 0;
                 c  = a / b; // DivideByZeroException
                 Console.WriteLine($"C = {c}");
-                // int array, print > length
-                
-                int[] MyArray = new int[] {1,2,3}; 
-                Console.WriteLine($"Int[] = {MyArray[5]}"); //IndexOutOfRangeException
-            }
-            catch (IndexOutOfRangeException ex)
-            {
-                Console.WriteLine($"EX Index = {ex.Message}");
-                //throw;
             }
             catch (DivideByZeroException ex)
             {
-                Console.WriteLine($"EX 0 = {ex.Message}");
+                Console.WriteLine($"EX / by 0 = {ex.Message}");
                 //throw;
             }
             catch (Exception ex)
@@ -196,6 +189,18 @@ namespace C8_In4Hours
             finally
             {
                 Console.WriteLine($"Finally");
+            }
+
+            try
+            {
+                // int array, print > length
+                int[] MyArray = new int[] { 1, 2, 3 };
+                Console.WriteLine($"Int[] = {MyArray[5]}"); //IndexOutOfRangeException
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                Console.WriteLine($"EX Index = {ex.Message}");
+                //throw;
             }
         }
     }

@@ -14,6 +14,9 @@ namespace C8_In4Hours
 	    Presentation 			        - Web apps (ASP.NET), Win Forms, WPF
 	    Framework class libraries 	    - strings, arrays
 	    CLR (common language runtime) 	- JIT compiler, Garbage collection, Exeption handling, security
+         
+         Console.WriteLine("Is he an empoyee? " + (cust.isEmployee ? "Yes" : "No"));
+         // shorthand = cw = console.writeline
          */
 
         /// <summary> Prints "Hello World!"
