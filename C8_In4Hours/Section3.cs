@@ -33,6 +33,10 @@ namespace C8_In4Hours
         public void MethodByRef(ref int i)
         MethodByParams(j); 
         public void MethodByParams(params int[] j)
+
+        Optional params
+        MyMethod(int i, int b = 0); // b doesn't have to be defined
+        MyMethod(myInt: 12, myString: "2002"); // can name variables in any order
          */
 
         /// <summary> Prints "Hello World!"

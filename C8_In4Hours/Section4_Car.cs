@@ -55,23 +55,25 @@ namespace C8_In4Hours
         public virtual bool CheckCar(Section4_Car car)
         {
             bool isAllPassed = false;
+            string preMessagePass = "Pass - ";
+            string preMessageFail = "Fail - ";
 
             if (car.MaxSpeed > 80)
-                Print(true, "Max speed passed");
+                Print(true, $"{preMessagePass} Max speed ");
             else
-                Print(false, "Max speed failed");
+                Print(false, $"{preMessageFail} Max speed");
 
 
             if (car.Colour != CarColours.Grey)
-                Print(true, "Colour passed");
+                Print(true, $"{preMessagePass} Colour");
             else
-                Print(false, "Colour failed");
+                Print(false, $"{preMessageFail} Colour");
 
 
             if (car.Year > 1900)
-                Print(true, "Year passed");
+                Print(true, $"{preMessagePass} Year");
             else
-                Print(false, "Year failed");
+                Print(false, $"{preMessageFail} Year");
 
 
             Console.WriteLine($"\tPass: {countPass} \t Fail: {countFail}");

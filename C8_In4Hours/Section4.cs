@@ -43,6 +43,9 @@ namespace C8_In4Hours
         public void Lesson4_1()
         {
             //Encapsulation, classes
+            // In Car class, 
+            //      _model          = private
+            //      PreviousOwners  = read-only
 
             // Access Modifier - Public, Private
             // private member uses _, _myInt
@@ -50,8 +53,38 @@ namespace C8_In4Hours
             // public int Year { get; set; } // quicker
 
 
-            //Class Car
-            // car model, year, colour, maxSpeed
+
+            //Class Car - car model, year, colour, maxSpeed
+
+            // Car 1 = all fail
+            Section4_Car myCar1 = MyCarDetails("Car 1", 1800, Section4_Car.CarColours.Grey, 70);
+            CheckMyCar(myCar1);
+
+            // Car 2 = all pass
+            MyCarDetailsAndCheck(0, "Car 2", 2000, Section4_Car.CarColours.Red, 90);
+            
+            // Car 3 = pass and fail
+            MyCarDetailsAndCheck(0, "Car 3", 2000, Section4_Car.CarColours.Red, 60);
+            
+
+            
+        }
+
+        // For Lesson4_2 & 4_3, create class Car
+        // Returns Car, used for CheckMyCar
+        public Section4_Car MyCarDetails(string model, int year, Section4_Car.CarColours colour, int maxSpeed)
+        {
+            //Section4_Car myCar1 = MyCarDetails("H1", 2000, Section4_Car.CarColours.Grey, 70);
+            Section4_Car myCar = new Section4_Car();
+
+            myCar.Model = model;        //"H1";
+            myCar.Year = year;          //1800;
+            myCar.Colour = colour;      //Section4_Car.CarColours.Grey;
+            myCar.MaxSpeed = maxSpeed;  //70;
+            //CheckMyCar(myCar);
+            return myCar;
+
+            /* OLD CODE
             Section4_Car myCar1 = new Section4_Car();
 
             myCar1.Model = "H1";
@@ -63,89 +96,105 @@ namespace C8_In4Hours
             Console.WriteLine($"isPassed: {myCar1.CheckCar(myCar1)}");
             Console.WriteLine($"Owners: {myCar1.PreviousOwners}");
             Console.WriteLine("");
-
-
-            Section4_Car myCar2 = new Section4_Car 
+            */
+        }
+        // Same as above, no returns, just prints, contains int for which class to use, PrevOwners used only 
+        // for ManualTrans
+        public void MyCarDetailsAndCheck(int carClass, string model, int year, Section4_Car.CarColours colour, int maxSpeed,
+            int PrevOwners = -1)
+        {
+            // Choosing which class to use, Car, Manual Car or Auto Car
+            // Car makes random Previous owners, manual/ auto makes 0, (3) manual can adjust Prev owners
+            if(carClass == 0) { 
+                Section4_Car myCar = new Section4_Car
+                {
+                    Model = model,
+                    Year = year,
+                    Colour = colour,
+                    MaxSpeed = maxSpeed,
+                };
+                CheckMyCar(myCar);
+            }
+            else if (carClass == 1)
             {
-                Model = "H2",
-                Year = 2000,
-                Colour = Section4_Car.CarColours.Red,
-                MaxSpeed = 90,
-            };
-
-            Console.WriteLine("My Car 2");
-            Console.WriteLine($"isPassed: {myCar2.CheckCar(myCar2)}");
-            Console.WriteLine($"Owners: {myCar2.PreviousOwners}");
-            Console.WriteLine("");
-
-            Section4_Car myCar3 = new Section4_Car
+                // Manual always set to 0
+                Section4_ManualTrans myCar = new Section4_ManualTrans(0)
+                {
+                    Model = model,
+                    Year = year,
+                    Colour = colour,
+                    MaxSpeed = maxSpeed,
+                };
+                CheckMyCar(myCar);
+            }
+            else if (carClass == 2)
             {
-                Model = "H3",
-                Year = 2000,
-                Colour = Section4_Car.CarColours.Red,
-                MaxSpeed = 60,
-            };
-            Console.WriteLine("My Car 3");
-            Console.WriteLine($"isPassed: {myCar3.CheckCar(myCar3)}");
-            Console.WriteLine($"Owners: {myCar3.PreviousOwners}");
+                // Auto always set to 0
+                Section4_AutoTrans myCar = new Section4_AutoTrans(0)
+                {
+                    Model = model,
+                    Year = year,
+                    Colour = colour,
+                    MaxSpeed = maxSpeed,
+                };
+                CheckMyCar(myCar);
+            }
+            // Manual variation
+            else if (carClass == 3)
+            {
+                // This is only case PrevOwners should not be -1
+                Section4_ManualTrans myCar = new Section4_ManualTrans (PrevOwners)
+                {
+                    Model = model,
+                    Year = year,
+                    Colour = colour,
+                    MaxSpeed = maxSpeed,
+                };
+                CheckMyCar(myCar);
+            }
+        }
+        // Printing Car model, CheckCar results and previous owners
+        public void CheckMyCar(Section4_Car myCar)
+        {
+            // Print/ check car
+            Console.WriteLine($"My Car {myCar.Model}");
+            Console.WriteLine($"isPassed: {myCar.CheckCar(myCar)}"); // myCar.CheckCar(myCar2)...
+            Console.WriteLine($"Owners: {myCar.PreviousOwners}");
             Console.WriteLine("");
         }
+        
+        
+
         //  4.2 Inheritance, child classes, base classes
         public void Lesson4_2()
         {
             // Inheritance
-            // automatic/ manual class
+            // Automatic/ Manual class
             // class Section4_ManualTrans : Section4_Car
+                //vitrual method = overridable method
+                // needs to be public to be overridden
+                //base.run // base class
+                // car()        // constructor of base
+                // car(engine) // second constructor of base
+                // auto(engine):base(engine) // override constructor of base class
+            
 
-            //vitrual method = overridable method
-            //base.run // base class
-            // car()
-            // car(engine) // second constructor
-            // auto(engine):base(engine)
-            // needs to be public to be overridden
+            // 0 = car, 1 = manual, 2 = auto, 3 = manual (modify prev owners)
+            //AutoTrans class   - Always passes     no previous owners   output different messages
+            //ManualTrans class - Always fails      no previous owners   modify previous owners
 
-            // AutoTrans - passes and change message
-            Section4_AutoTrans myCar4 = new Section4_AutoTrans
-            {
-                Model = "H4",
-                Year = 2000,
-                Colour = Section4_Car.CarColours.Gold,
-                MaxSpeed = 90,
-            };
+            // Prev Owners = -1 // this means unused, optional param, only used for 3 (ManualTrans)
 
-            Console.WriteLine("My Car 4 - AutoTrans");
-            Console.WriteLine($"isPassed: {myCar4.CheckCar(myCar4)}");
-            Console.WriteLine($"Owners: {myCar4.PreviousOwners}");
-            Console.WriteLine("");
+     
+            // Car 5 = AutoTrans - passes (fail values), no prev, change message
+            MyCarDetailsAndCheck(2, "Car 4 - AutoTrans", 1800, Section4_Car.CarColours.Gold, 90);
 
 
-            // ManualTrans - fails and no previous
-            Section4_ManualTrans myCar5 = new Section4_ManualTrans
-            {
-                Model = "H5",
-                Year = 2000,
-                Colour = Section4_ManualTrans.CarColours.Gold,
-                MaxSpeed = 90,
-            };
-
-            Console.WriteLine("My Car 5 - ManualTrans");
-            Console.WriteLine($"isPassed: {myCar5.CheckCar(myCar5)}");
-            Console.WriteLine($"Owners: {myCar5.PreviousOwners}");
-            Console.WriteLine("");
-
-
-            Section4_ManualTrans myCar5_1 = new Section4_ManualTrans(0) // 0 previous owners
-            {
-                Model = "H4_1",
-                Year = 2000,
-                Colour = Section4_Car.CarColours.Gold,
-                MaxSpeed = 90,
-            };
-
-            Console.WriteLine("My Car 5_1 - ManualTrans");
-            Console.WriteLine($"isPassed: {myCar5_1.CheckCar(myCar5_1)}");
-            Console.WriteLine($"Owners: {myCar5_1.PreviousOwners}");
-            Console.WriteLine("");
+            // Car 6 = ManualTrans - fails, no previous
+            MyCarDetailsAndCheck(1, "Car 5 - ManualTrans", 2000, Section4_Car.CarColours.Gold, 90);
+            // Car 7 = ManualTrans - fails, change previous owners
+            MyCarDetailsAndCheck(3, "Car 6 - ManualTrans", 2000, Section4_Car.CarColours.Gold, 90,
+                                  55);
         }
         //  4.3 Abstraction, override
         public void Lesson4_3()

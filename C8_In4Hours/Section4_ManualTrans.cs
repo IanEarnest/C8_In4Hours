@@ -7,17 +7,14 @@ namespace C8_In4Hours
     class Section4_ManualTrans : Section4_Car
     {
 
-        public Section4_ManualTrans()
+        public Section4_ManualTrans() : base()
         {
-            //PrevOwners = 0; //?
             //base.PreviousOwners = 0;
-            //base.CarColours.Gold = 100;
         }
 
         public Section4_ManualTrans(int PrevOwners) : base(PrevOwners)
         {
             //base.PreviousOwners = PrevOwners; // read only for child/ parent?
-            PrevOwners = 0; //?
         }
 
 

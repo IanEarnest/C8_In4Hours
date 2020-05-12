@@ -41,7 +41,7 @@ namespace C8_In4Hours
 
             // Section 4 = OOP - // Current vid = 4.1
             S4.PrintHello();
-            S4.Lesson4_1();
+            //S4.Lesson4_1();
             S4.Lesson4_2();
 
 
