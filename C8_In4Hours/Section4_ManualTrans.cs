@@ -22,5 +22,12 @@ namespace C8_In4Hours
         {
             return false;
         }
+
+        // Abstract
+        public override void PrintHello()
+        {
+            Console.WriteLine($"\t Hello from Car Manual");
+            //throw new NotImplementedException();
+        }
     }
 }

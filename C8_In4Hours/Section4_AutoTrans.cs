@@ -39,5 +39,12 @@ namespace C8_In4Hours
             */
             Console.WriteLine($"\t{message} + Auto");
         }
+
+        // Abstract
+        public override void PrintHello()
+        {
+            Console.WriteLine($"\t Hello from Car Auto");
+            //throw new NotImplementedException();
+        }
     }
 }

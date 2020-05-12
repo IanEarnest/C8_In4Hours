@@ -36,46 +36,15 @@ namespace C8_In4Hours
        
        
 
-        //Section 4. OOP 1
-        //  Object-Oriented Programming in C#
-        //  Encapsulation, classes, objects, data members, properties
-        // Encapsulation = keeping data private
-        public void Lesson4_1()
-        {
-            //Encapsulation, classes
-            // In Car class, 
-            //      _model          = private
-            //      PreviousOwners  = read-only
-
-            // Access Modifier - Public, Private
-            // private member uses _, _myInt
-            // public property (get/ set), get = return, set = value (shorthand = propfull)
-            // public int Year { get; set; } // quicker
-
-
-
-            //Class Car - car model, year, colour, maxSpeed
-
-            // Car 1 = all fail
-            Section4_Car myCar1 = MyCarDetails("Car 1", 1800, Section4_Car.CarColours.Grey, 70);
-            CheckMyCar(myCar1);
-
-            // Car 2 = all pass
-            MyCarDetailsAndCheck(0, "Car 2", 2000, Section4_Car.CarColours.Red, 90);
-            
-            // Car 3 = pass and fail
-            MyCarDetailsAndCheck(0, "Car 3", 2000, Section4_Car.CarColours.Red, 60);
-            
-
-            
-        }
 
         // For Lesson4_2 & 4_3, create class Car
         // Returns Car, used for CheckMyCar
-        public Section4_Car MyCarDetails(string model, int year, Section4_Car.CarColours colour, int maxSpeed)
+        public Section4_CarFull MyCarDetails(string model, int year, Section4_Car.CarColours colour, int maxSpeed)
         {
             //Section4_Car myCar1 = MyCarDetails("H1", 2000, Section4_Car.CarColours.Grey, 70);
-            Section4_Car myCar = new Section4_Car();
+
+            Section4_CarFull myCar = new Section4_CarFull();
+            //Section4_Car myCar = new Section4_Car();
 
             myCar.Model = model;        //"H1";
             myCar.Year = year;          //1800;
@@ -105,8 +74,8 @@ namespace C8_In4Hours
         {
             // Choosing which class to use, Car, Manual Car or Auto Car
             // Car makes random Previous owners, manual/ auto makes 0, (3) manual can adjust Prev owners
-            if(carClass == 0) { 
-                Section4_Car myCar = new Section4_Car
+            if(carClass == 0) {
+                Section4_ManualTrans myCar = new Section4_ManualTrans
                 {
                     Model = model,
                     Year = year,
@@ -162,10 +131,38 @@ namespace C8_In4Hours
             Console.WriteLine($"Owners: {myCar.PreviousOwners}");
             Console.WriteLine("");
         }
-        
-        
 
-        //  4.2 Inheritance, child classes, base classes
+        //  4.1 Encapsulation, classes, objects, data members, properties, Encapsulation = keeping data private
+        public void Lesson4_1()
+        {
+            //Encapsulation, classes
+            // In Car class, 
+            //      _model          = private
+            //      PreviousOwners  = read-only
+
+            // Access Modifier - Public, Private
+            // private member uses _, _myInt
+            // public property (get/ set), get = return, set = value (shorthand = propfull)
+            // public int Year { get; set; } // quicker
+
+
+
+            //Class Car - car model, year, colour, maxSpeed
+
+            // Car 1 = all fail
+            Section4_CarFull myCar1 = MyCarDetails("Car 1", 1800, Section4_Car.CarColours.Grey, 70);
+            CheckMyCar(myCar1);
+
+            // Car 2 = all pass
+            Section4_CarFull myCar2 = MyCarDetails("Car 2", 2000, Section4_Car.CarColours.Red, 90);
+            CheckMyCar(myCar2);
+
+            // Car 3 = pass and fail
+            Section4_CarFull myCar3 = MyCarDetails("Car 3", 2000, Section4_Car.CarColours.Red, 60);
+            CheckMyCar(myCar3);
+        }
+
+        //  4.2 Inheritance, child classes, base classes, use methods from another class
         public void Lesson4_2()
         {
             // Inheritance
@@ -173,39 +170,77 @@ namespace C8_In4Hours
             // class Section4_ManualTrans : Section4_Car
                 //vitrual method = overridable method
                 // needs to be public to be overridden
-                //base.run // base class
+                // base.run // base class
                 // car()        // constructor of base
                 // car(engine) // second constructor of base
                 // auto(engine):base(engine) // override constructor of base class
             
 
-            // 0 = car, 1 = manual, 2 = auto, 3 = manual (modify prev owners)
+            // 0 = manual(was car), 1 = manual 0 prev, 2 = auto, 3 = manual (modify prev owners)
             //AutoTrans class   - Always passes     no previous owners   output different messages
             //ManualTrans class - Always fails      no previous owners   modify previous owners
 
             // Prev Owners = -1 // this means unused, optional param, only used for 3 (ManualTrans)
 
      
-            // Car 5 = AutoTrans - passes (fail values), no prev, change message
+            // Car 4 = AutoTrans - passes (fail values), no prev, change message
             MyCarDetailsAndCheck(2, "Car 4 - AutoTrans", 1800, Section4_Car.CarColours.Gold, 90);
 
 
-            // Car 6 = ManualTrans - fails, no previous
+            // Car 5 = ManualTrans - fails, no previous
             MyCarDetailsAndCheck(1, "Car 5 - ManualTrans", 2000, Section4_Car.CarColours.Gold, 90);
-            // Car 7 = ManualTrans - fails, change previous owners
+            // Car 6 = ManualTrans - fails, change previous owners
             MyCarDetailsAndCheck(3, "Car 6 - ManualTrans", 2000, Section4_Car.CarColours.Gold, 90,
                                   55);
         }
-        //  4.3 Abstraction, override
+
+        //  4.3 Abstraction, override, hide class, modify abstract method
         public void Lesson4_3()
         {
+            // Manual/ AutoTrans uses car.PrintHello() differently
 
+            // Abstract, cannot create instance, only inherited
+                // Section4_Car myCar = new Section4_Car(); // Cannot use
+            // public abstract class Car // // atleast 1 abstract class (cannot use car, only Auto or Manual)
+                // public abstract void PrintHello();
+
+
+            // Car 7 = Print hello
+            Section4_CarFull myCar = MyCarDetails("Car 7", 2000, Section4_Car.CarColours.Red, 60);
+            myCar.PrintHello();
+            CheckMyCar(myCar);
         }
+
         //  4.4 Polymorphism, interface vs abstract
         public void Lesson4_4()
         {
+            // Car 8 = Print hello
+            Section4_CarFull myCar = MyCarDetails("Car 8", 2000, Section4_Car.CarColours.Red, 60);
+            myCar.PrintHello();
+            CheckMyCar(myCar);
 
+            // Polymorphism
+            // Parent can point to any derived classes
+            //Car myCar
+            // Car = new Section4_CarManual
+            // Car = new Section4_CarAuto
+            // Car.PrintHello();
+
+            // Interface
+            // Public interface Section4_IConvertableCar
+            // bool ChangeRoofTop();
+            //class Section4_AutoTrans : Section4_Car, Section4_IConvertableCar
+            // public bool ChangeRoofTop() {print "changed roof top")}
+            //Section4_IConvertableCar convertableCar = new Section4_AutoTrans();
+            //convertableCar.ChangeRoofTop();
+
+            // abstract vs interface
+            // abstract = we know some properties/ methods to be used
+            // interface = don't know implementation (just properties and methods names)
+            // change gear (we dont know how it will be changed in child classes)
+            // only inherit from 1 class, can have multiple interface
         }
+
         //  4.5 Concepts Related to Object Oriented Programming
         //   Read-only, constants, protected, partial, static classes
         public void Lesson4_5()

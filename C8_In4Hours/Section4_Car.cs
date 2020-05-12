@@ -5,7 +5,7 @@ using System.Text;
 
 namespace C8_In4Hours
 {
-    class Section4_Car
+    public abstract class Section4_Car
     {
         // Constructor 
         public Section4_Car()
@@ -45,6 +45,14 @@ namespace C8_In4Hours
             Green = 2,
             Purple = 5,
             Gold = 100,
+        }
+        public enum CarColoursChanged
+        {
+            Grey = 100,
+            Red = 1,
+            Green = 2,
+            Purple = 5,
+            Gold = 0,
         }
         /// <summary>
         /// Check car is defined and has a good standards
@@ -98,5 +106,8 @@ namespace C8_In4Hours
             Console.WriteLine($"\t{message}");
             // write?
         }
+
+        public abstract void PrintHello();
+            //Console.WriteLine($"\t Hello from Car{message}");
     }
 }
