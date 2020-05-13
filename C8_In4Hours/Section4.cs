@@ -132,6 +132,7 @@ namespace C8_In4Hours
             Console.WriteLine("");
         }
 
+
         //  4.1 Encapsulation, classes, objects, data members, properties, Encapsulation = keeping data private
         public void Lesson4_1()
         {
@@ -150,19 +151,19 @@ namespace C8_In4Hours
             //Class Car - car model, year, colour, maxSpeed
 
             // Car 1 = all fail
-            Section4_CarFull myCar1 = MyCarDetails("Car 1", 1800, Section4_Car.CarColours.Grey, 70);
+            Section4_CarFull myCar1 = MyCarDetails("1 - all fail", 1800, Section4_Car.CarColours.Grey, 70);
             CheckMyCar(myCar1);
 
             // Car 2 = all pass
-            Section4_CarFull myCar2 = MyCarDetails("Car 2", 2000, Section4_Car.CarColours.Red, 90);
+            Section4_CarFull myCar2 = MyCarDetails("2 - all pass", 2000, Section4_Car.CarColours.Red, 90);
             CheckMyCar(myCar2);
 
             // Car 3 = pass and fail
-            Section4_CarFull myCar3 = MyCarDetails("Car 3", 2000, Section4_Car.CarColours.Red, 60);
+            Section4_CarFull myCar3 = MyCarDetails("3 - pass and fail", 2000, Section4_Car.CarColours.Red, 60);
             CheckMyCar(myCar3);
         }
 
-        //  4.2 Inheritance, child classes, base classes, use methods from another class
+        //  4.2 Inheritance, child classes, base classes, use methods from another class, virtual
         public void Lesson4_2()
         {
             // Inheritance
@@ -184,13 +185,13 @@ namespace C8_In4Hours
 
      
             // Car 4 = AutoTrans - passes (fail values), no prev, change message
-            MyCarDetailsAndCheck(2, "Car 4 - AutoTrans", 1800, Section4_Car.CarColours.Gold, 90);
+            MyCarDetailsAndCheck(2, "4 - AutoTrans", 1800, Section4_Car.CarColours.Gold, 90);
 
 
             // Car 5 = ManualTrans - fails, no previous
-            MyCarDetailsAndCheck(1, "Car 5 - ManualTrans", 2000, Section4_Car.CarColours.Gold, 90);
+            MyCarDetailsAndCheck(1, "5 - ManualTrans 0", 2000, Section4_Car.CarColours.Gold, 90);
             // Car 6 = ManualTrans - fails, change previous owners
-            MyCarDetailsAndCheck(3, "Car 6 - ManualTrans", 2000, Section4_Car.CarColours.Gold, 90,
+            MyCarDetailsAndCheck(3, "6 - ManualTrans 55", 2000, Section4_Car.CarColours.Gold, 90,
                                   55);
         }
 
@@ -206,46 +207,83 @@ namespace C8_In4Hours
 
 
             // Car 7 = Print hello
-            Section4_CarFull myCar = MyCarDetails("Car 7", 2000, Section4_Car.CarColours.Red, 60);
-            myCar.PrintHello();
+            Section4_CarFull myCar = MyCarDetails("7 - hello", 2000, Section4_Car.CarColours.Red, 60);
+            myCar.PrintHello(); // Abstract
             CheckMyCar(myCar);
         }
 
-        //  4.4 Polymorphism, interface vs abstract
+        //  4.4 Polymorphism, using derived/ child classes, changing assignments (Car with CarManual/ CarAuto)
+        // Hello from Car Manual
         public void Lesson4_4()
         {
             // Car 8 = Print hello
-            Section4_CarFull myCar = MyCarDetails("Car 8", 2000, Section4_Car.CarColours.Red, 60);
-            myCar.PrintHello();
-            CheckMyCar(myCar);
+            Section4_Car myCar;
+            myCar = new Section4_ManualTrans();
+            //myCar = new Section4_AutoTrans();
+            //myCar = new Section4_CarFull();
+            myCar.PrintHello(); // Hello from Car Manual
+            
 
             // Polymorphism
             // Parent can point to any derived classes
-            //Car myCar
-            // Car = new Section4_CarManual
-            // Car = new Section4_CarAuto
-            // Car.PrintHello();
+            // Car myCar
+            // myCar = new Section4_CarManual // Section4_ManualTrans : Car
+            // myCar = new Section4_CarAuto   // Section4_AutoTrans : Car
+            // myCar = new Section4_CarFull   // Section4_CarFull : Car
+            // myCar.PrintHello();
+        }
 
-            // Interface
-            // Public interface Section4_IConvertableCar
-            // bool ChangeRoofTop();
-            //class Section4_AutoTrans : Section4_Car, Section4_IConvertableCar
-            // public bool ChangeRoofTop() {print "changed roof top")}
-            //Section4_IConvertableCar convertableCar = new Section4_AutoTrans();
-            //convertableCar.ChangeRoofTop();
+        //interface vs abstract
+        // Hello from Car Full
+        // Roof top change
+        public void Lesson4_4_2()
+        {
+            // abstract = half blind = we know some properties/ methods to be used
+            // abstract = constants, method stubs and members   single inheritance
+            // Car 8 = Print hello - abstract
+            Section4_CarFull myCar = new Section4_CarFull();
+            myCar.PrintHello();
+            /*  
+             *  "CarFull" inherits abstract class "Car" and contains "PrintHello()" abstract method
+            public abstract class Section4_Car
+                public abstract void PrintHello();
 
-            // abstract vs interface
-            // abstract = we know some properties/ methods to be used
-            // interface = don't know implementation (just properties and methods names)
-            // change gear (we dont know how it will be changed in child classes)
-            // only inherit from 1 class, can have multiple interface
+             class Section4_CarFull : Section4_Car    // inherit/ contains abstract
+                public override void PrintHello()
+                     Console.WriteLine($"\t Hello from Car Full");
+                    */
+                
+
+
+            // interface = blind = don't know implementation (just properties and methods names)
+            // interfaces = constants and method stubs          multiple inheritance
+            // Car 8 = Change roof top - interface
+            // Keep everything private except interface methods
+            Section4_IConvertableCar myCar2 = new Section4_CarFull();
+            myCar2.ChangeRoofTop(); // Method only in Section4_IConvertableCar
+            myCar2.ChangeRoofTop();
+            /* 
+             * "CarFull" inherits interface class "IConvertableCar" and contains "ChangeRoofTop()" method
+             public interface Section4_IConvertableCar
+                bool ChangeRoofTop(); // only declare methods
+
+            class Section4_CarFull : Section4_Car, Section4_IConvertableCar // Multiple inheritance
+                public bool ChangeRoofTop()
+                   Console.WriteLine($"changed roof top, now roof up = {roofUp}");
+                   */
         }
 
         //  4.5 Concepts Related to Object Oriented Programming
         //   Read-only, constants, protected, partial, static classes
-        public void Lesson4_5()
+        public void Lesson4_6()
         {
-
+            //Read - only, constants, protected, partial, static classes
+            // Properties, read only/ vs constants
+            // Object initialiser
+            // Partial classes
+            // access modifiers Protected, internal, protected internal 
+            // class system.object overriding tostring method
+            // static classes shared class
         }
     }
 }

@@ -27,6 +27,7 @@ namespace C8_In4Hours
         // Email client - class (send email, inbox, mail has address, from, header, body)
         // Trip planner - store Hotel reservations tickets, weblinks, important phone numbers, addresses of places to visit and restaurants
         // Build/ Compile, CLR(JIT), MSIL, Machine Language
+        // AFTER = Old projects, basic examples to put on portfolio
 
         static void Main(string[] args)
         {
@@ -46,6 +47,8 @@ namespace C8_In4Hours
             S4.Lesson4_2();
             S4.Lesson4_3();
             S4.Lesson4_4();
+            S4.Lesson4_4_2();
+            S4.Lesson4_5();
 
             // Section 5 = Concepts
             S5.PrintHello();

@@ -63,8 +63,8 @@ namespace C8_In4Hours
         public virtual bool CheckCar(Section4_Car car)
         {
             bool isAllPassed = false;
-            string preMessagePass = "Pass - ";
-            string preMessageFail = "Fail - ";
+            string preMessagePass = "Pass -";
+            string preMessageFail = "Fail -";
 
             if (car.MaxSpeed > 80)
                 Print(true, $"{preMessagePass} Max speed ");
