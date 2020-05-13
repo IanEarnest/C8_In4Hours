@@ -36,22 +36,23 @@ namespace C8_In4Hours
             //S1_Methods();
 
             // Section 2 = Logic
-            S2.PrintHello(); // TODO = tidy S2
+            S2.PrintHello();
 
             // Section 3 = Methods  
             S3.PrintHello();
 
-            // Section 4 = OOP - // Current vid = 4.1
+            // Section 4 = OOP
             S4.PrintHello();
-            S4.Lesson4_1();
-            S4.Lesson4_2();
-            S4.Lesson4_3();
-            S4.Lesson4_4();
-            S4.Lesson4_4_2();
-            S4.Lesson4_5();
+            S4.Lesson4_5(); // re-read, tidy Section 4
 
-            // Section 5 = Concepts
+            // Section 5 = Concepts // Current vid = 4.1
             S5.PrintHello();
+            S5.Lesson5_1();
+            S5.Lesson5_2();
+            S5.Lesson5_3();
+            S5.Lesson5_4();
+            S5.Lesson5_5();
+            S5.Lesson5_6();
 
             // Section 6 = Project
             S6.PrintHello();

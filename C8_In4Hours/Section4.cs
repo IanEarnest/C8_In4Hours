@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -18,9 +19,18 @@ namespace C8_In4Hours
     class Section4
     {
         /* Notes
-        A
+        Encapsulation 	= keeping data private
+        Inheritance	    = child class, use methods from another
+        Abstraction  	= hide class, modify abstract method
+        Polymorphism	= child/ using derived classes
+        interface vs abstract = inheritance, use of methods 
+
+        Constants/ Read-only
+        Object initialiser (ToString)
+        Access modifiers (Protected, internal)
+        Classes (partial/ static)
          */
-        
+
         /// <summary> Prints "Hello World!"
         /// </summary>
         public void PrintHello()
@@ -66,6 +76,18 @@ namespace C8_In4Hours
             Console.WriteLine($"Owners: {myCar1.PreviousOwners}");
             Console.WriteLine("");
             */
+
+             
+            /* Other
+             // inline
+                Section4_Car myCar2 = new Section4_Car()
+                {
+                    Model = model,
+                    Year = year,
+                    Colour = colour,
+                    MaxSpeed = maxSpeed,
+                };
+             */
         }
         // Same as above, no returns, just prints, contains int for which class to use, PrevOwners used only 
         // for ManualTrans
@@ -274,16 +296,73 @@ namespace C8_In4Hours
         }
 
         //  4.5 Concepts Related to Object Oriented Programming
-        //   Read-only, constants, protected, partial, static classes
-        public void Lesson4_6()
+        // Constants/ Read-only
+        // Object initialiser (ToString)
+        // Access modifiers (Protected, internal)
+        // Classes (partial/ static)
+        public void Lesson4_5()
         {
-            //Read - only, constants, protected, partial, static classes
-            // Properties, read only/ vs constants
-            // Object initialiser
-            // Partial classes
+            // Properties, read only/ vs constants and Object initialiser
+            Section4_ShippingBusinessLogic objShippingBiz = new Section4_ShippingBusinessLogic
+            ("MyStore") // Setting private readonly
+            {
+                OfficeLocation = "London",
+                RegistrationNumber = "TN12-B23"
+            };
+
+            // Both private/ cannot change
+            //objShippingBiz.ORGANIZATION_NAME  // ORGANIZATION_NAME = "ABC Corp Ltd."; 
+            //objShippingBiz._departmentName    // _departmentName = departmentName (constructor)
+
+            // (ToString changed) - class System.Object overriding ToString method
+            // Before "C8_In4Hours.Section4_ShippingBusinessLogic"
+            // After "Organization - ABC Corp Ltd." 
+            Console.WriteLine($"Class = {objShippingBiz}"); // ToString
+            // "public override string ToString()" was used in "Section4_ShippingBusinessLogic"
+            Console.WriteLine("");
+
+
             // access modifiers Protected, internal, protected internal 
-            // class system.object overriding tostring method
-            // static classes shared class
+            //CourierServiceBase 	- abstract
+            //EagleCourier_SA 	    - inherit CourierServiceBase
+            //EagleCourier_NA 	    - inherit CourierServiceBase
+
+            // CompanyRegistration (protected)
+            // Packing (internal)
+            Section4_CourierServiceBase myServiceSA = new Section4_EagleCourier_SA();
+            Console.WriteLine($"Courier : {myServiceSA.CompanyRegistration}");
+            //myServiceSA.Packing("Laptop");
+            myServiceSA.SendItemsByAir("Laptop"); // "Sending" packs the item first
+            
+            Console.WriteLine("");
+
+            Section4_CourierServiceBase myServiceNA = new Section4_EagleCourier_NA();
+            Console.WriteLine($"Courier : {myServiceNA.CompanyRegistration}");
+            //myServiceNA.Packing("Car");
+            myServiceNA.SendItemsByRoad("Car"); // "Sending" packs the item first
+            
+            Console.WriteLine("");
+
+
+
+            // Partial classes = combines classes files (used for multiple developers)
+            // public partial class Section4_EagleCourier_SA : Section4_CourierServiceBase
+            // partial class Section4_EagleCourier_SA  // second EagleCourier_SA class in folder "Ext"
+
+            // Cost in "Ext" folder "Section4_EagleCourier_SA" file
+            Section4_EagleCourier_SA mySA = new Section4_EagleCourier_SA();
+            Console.WriteLine($"Courier : {mySA.CompanyRegistration}, Cost: {mySA.Cost()}");
+            //mySA.Packing("Car");
+            mySA.SendItemsByRoad("Car");
+
+            Console.WriteLine("");
+
+
+            // static classes = shared class
+            // static means shareable, cannot create instances/ only one version
+            //public static class Section4_MyConstants (also contains Helper)
+            string EUString = Section4_MyConstants.APP_EU;
+            Section4_Helper.Log($"Hello from {EUString}");
         }
     }
 }

@@ -10,6 +10,7 @@ namespace C8_In4Hours
         public Section4_ManualTrans() : base()
         {
             //base.PreviousOwners = 0;
+            //this.PreviousOwners = 0;
         }
 
         public Section4_ManualTrans(int PrevOwners) : base(PrevOwners)
