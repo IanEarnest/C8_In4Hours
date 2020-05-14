@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
+using IHSLibs1;
+using IHSLibs2;
 
 namespace C8_In4Hours
 {
@@ -35,7 +38,8 @@ namespace C8_In4Hours
             //     /ldl - downloaded files cache
             //     /lr - assemblies and references
             //C:\Windows\Microsoft.NET\assembly\
-            // %windir%\assembly
+            // WindowsKey + E (Explorer)    %windir%\assembly
+            // 
          */
 
         /// <summary> Prints "Hello World!"
@@ -64,57 +68,88 @@ namespace C8_In4Hours
             //	.dll (dynamic link library - Class library project)
 
             // Private/ Public Library -
-            // IHSLibs1 = private - GetMyName
-            // IHSLibs2 = public - Print(message)
+            // IHSLibs1 = private - GetMyName()
+            // IHSLibs2 = public  - Print()
 
             // Private
             // New Class Library project - IHSLibs1 - public string GetMyName() return "Ian..."
-            // add reference
-            // using IHSLibs1 // IHSLibs1.dll private assembly (look for in folder)
+            // add reference (Dependencies, Projects, IHSLibs1)
+            // Using IHSLibs1 // need to import
+            Class1 IHSClass1 = new Class1();
+            string myName = IHSClass1.GetMyName();
+            Console.WriteLine($"IHSClass1 = Name: {myName}");
+
 
             // Public
             // New Class Library project - IHSLibs2 - public void Print(message)
             //      Console.WriteLine($"Print from IHSLibs2: {message}");
             // GAC (Global Assembly Cache) = create key, sign project, install
-            //      (create key) CMD Admin =     sn -k 
+            //      (create key) CMD Admin =     sn -k "myStrongKey.snk" // store this anywhere (desktop)
             //      (assign key) Visual Studio = properties - signing - sing the assembly (with key)
-            //   if changing Private Library to Private Library = refrence - IHSLibs1 - copy local property false
-            // 
-            //      (install) CMD Admin =   gacutil -i "C:\Users\ianea\source\repos\C8_In4Hours\C8_In4Hours\bin\Debug\netcoreapp3.1\IHSLibs2.dll"
+            //      (refrence) IHSLibs2 - copy local property false
+            //      (install) CMD Admin =   gacutil -i "C:\Users\ianea\source\repos\C8_In4Hours\IHSLibs2\bin\Debug\netcoreapp3.1\IHSLibs2.dll"
             //      (uninstall) CMD Admin = gacutil -u IHSLibs2
+            // add reference (Dependencies, Assemblies, IHSLibs2)
+            // Using IHSLibs2 // need to import
+            Class2 IHSClass2 = new Class2();
+            IHSClass2.Print("Hi IHS");
+            IHSLibs2.Class2.MyPrint("Hi IHS again");
+
+            CheckAssembly(1, 0); // System.Core
+            CheckAssembly(1, 1); // IHSLibs2
+            CheckAssembly(2, 2); // Full IHSLibs2 location
+        }
+        public void CheckAssembly(int location, int name)
+        {
+            string locationStr = "";
+            string nameStr = "";
+
+            if (location == 0) locationStr = @"C:\Windows\assembly\"; // .NET 3.5 and below
+            if (location == 1) locationStr = @"C:\Windows\Microsoft.NET\assembly\GAC_MSIL\";
+            if (location == 2) locationStr = @"C:\Windows\Microsoft.NET\assembly\GAC_MSIL\IHSLibs2\v4.0_1.0.0.0__22e507a759643b56\";
+
+            if (name == 0) nameStr = @"System.Core";
+            if (name == 1) nameStr = @"IHSLibs2";
+            if (name == 2) nameStr = @"IHSLibs2.dll";
+
+            CheckAssembly(locationStr, nameStr);
         }
 
-        public void CheckAssembly(string location = @"C:\Windows\assembly\", string name = "IHSLibs2.dll")
+        public void CheckAssembly(string location, string name)
         {
-            // Doesn't exist? C:\Windows\Microsoft.NET\Framework\v3.5\System.Net.dll
-            // location = 
             string file = location + name; // @"C:\Windows\assembly\IHSLibs2.dll"
+
+            Console.WriteLine($"\tLooking for: {file}");
+            
             try
             {
-                System.Reflection.AssemblyName testAssembly;
+                // System.Reflection
+                AssemblyName testAssembly;
 
-                testAssembly = System.Reflection.AssemblyName.GetAssemblyName(file);
+                testAssembly = AssemblyName.GetAssemblyName(file);
                 
-                System.Console.WriteLine($"Yes, the file is an assembly : {testAssembly.FullName}");
+                Console.WriteLine($"\tYes, the file is an assembly : {testAssembly.FullName}");
+                
+                Assembly myDll = Assembly.Load("IHSLibs2"); //IHSLibs2 cannot find??
+                Console.WriteLine($"\t{myDll.FullName}");
             }
-
             catch (System.IO.FileNotFoundException)
             {
-                System.Console.WriteLine("The file cannot be found.");
+                Console.WriteLine("\tThe file cannot be found.");
             }
 
-            catch (System.BadImageFormatException)
+            catch (BadImageFormatException)
             {
-                System.Console.WriteLine("The file is not an assembly.");
+                Console.WriteLine("\tThe file is not an assembly.");
             }
 
             catch (System.IO.FileLoadException)
             {
-                System.Console.WriteLine("The assembly has already been loaded.");
+                System.Console.WriteLine("\tThe assembly has already been loaded.");
             }
             catch (Exception e)
             {
-                System.Console.WriteLine($"E = {e}");
+                Console.WriteLine($"\tE = {e}");
             }
         }
 

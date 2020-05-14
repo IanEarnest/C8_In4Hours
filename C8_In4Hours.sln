@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C8_In4Hours", "C8_In4Hours\C8_In4Hours.csproj", "{61441FAB-86B1-4E76-BEDE-D58F2A805C41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "C8_In4Hours", "C8_In4Hours\C8_In4Hours.csproj", "{61441FAB-86B1-4E76-BEDE-D58F2A805C41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IHSLibs1", "IHSLibs1\IHSLibs1.csproj", "{067248C3-4A07-42D7-AB22-7E04C87D2598}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IHSLibs2", "IHSLibs2\IHSLibs2.csproj", "{8A0F8BD3-B45D-472D-A42E-70B1E199522D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{61441FAB-86B1-4E76-BEDE-D58F2A805C41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61441FAB-86B1-4E76-BEDE-D58F2A805C41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61441FAB-86B1-4E76-BEDE-D58F2A805C41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{067248C3-4A07-42D7-AB22-7E04C87D2598}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{067248C3-4A07-42D7-AB22-7E04C87D2598}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{067248C3-4A07-42D7-AB22-7E04C87D2598}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{067248C3-4A07-42D7-AB22-7E04C87D2598}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A0F8BD3-B45D-472D-A42E-70B1E199522D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A0F8BD3-B45D-472D-A42E-70B1E199522D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A0F8BD3-B45D-472D-A42E-70B1E199522D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A0F8BD3-B45D-472D-A42E-70B1E199522D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
