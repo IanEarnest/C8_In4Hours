@@ -56,6 +56,7 @@ namespace C8_In4Hours
 
             // Section 6 = Project
             S6.PrintHello();
+            //Console.ReadLine();
         }
 
         // Lessons from Section 1
