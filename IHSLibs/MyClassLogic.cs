@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace IHSLibs1
+namespace IHSLibs
 {
-    public class Class1
+    public class MyClassLogic
     {
         public string GetMyName()
         {

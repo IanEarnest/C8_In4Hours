@@ -17,6 +17,7 @@ namespace C8_In4Hours
         // Question - "Interpolation"
         // Question - useful encapsulation?
         // Question - why use abstract instead of inheriting (hides class?)
+        // Question - GAC for .NET Core?
 
         // Tips - use $: Console.WriteLine($"Name: {name}, Age: {age}");
         // C# use "ref" keyword for direct reference to variable instead of copies

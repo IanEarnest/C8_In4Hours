@@ -15,6 +15,9 @@ namespace C8_In4Hours
 	    Framework class libraries 	    - strings, arrays
 	    CLR (common language runtime) 	- JIT compiler, Garbage collection, Exeption handling, security
          
+         System.Console.WriteLine("Hi");
+         or 
+         using System; // using directive, references namespaces
          Console.WriteLine("Is he an empoyee? " + (cust.isEmployee ? "Yes" : "No"));
          // shorthand = cw = console.writeline
          */

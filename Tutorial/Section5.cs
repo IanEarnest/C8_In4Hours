@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
-using IHSLibs1;
-using IHSLibs2;
+using IHSLibs;
 
 namespace C8_In4Hours
 {
@@ -22,13 +21,6 @@ namespace C8_In4Hours
     class Section5
     {
         /* Notes
-        // nullable (int?, bool? .. etc)
-        int? iNull = null; 
-
-        // Anonymous collection, use like enum (myAnonymousVar.CompanyName)
-        var myAnonymousVars = new { CompanyName = "Hi", Year = 2000 }; 
-        
-
             // create app to do this?
             // GAC = create key, install and uninstall (using CMD Admin)
             //     sn -k 
@@ -37,9 +29,22 @@ namespace C8_In4Hours
             //     /l   - lists all assemblies
             //     /ldl - downloaded files cache
             //     /lr - assemblies and references
-            //C:\Windows\Microsoft.NET\assembly\
+            //C:\Windows\Microsoft.NET\assembly\GAC_MSIL\
             // WindowsKey + E (Explorer)    %windir%\assembly
             // 
+            // Problem - unable to use GAC assembly (copy local false = cannot find assembly)
+            //
+        // Value Type, Reference Type
+        // Value        = Simple (Int, String, Bool), Enum, Struct, Nullable
+        // Reference    = Class, Interface, Array, Delegate
+
+        // nullable (int?, bool? .. etc)
+        int? iNull = null; 
+
+        // Anonymous collection, use like enum (myAnonymousVar.CompanyName)
+        var myAnonymousVars = new { CompanyName = "Hi", Year = 2000 }; 
+
+
          */
 
         /// <summary> Prints "Hello World!"
@@ -49,10 +54,7 @@ namespace C8_In4Hours
             Console.WriteLine("S5 Hello World!");
         }
 
-       
-       
-       
-       
+
 
         //Advanced Programming Concepts in C#
         //   5.1 Assemblies, GAC, Exe/ DLL, private/ public class library
@@ -71,33 +73,46 @@ namespace C8_In4Hours
             // IHSLibs1 = private - GetMyName()
             // IHSLibs2 = public  - Print()
 
+
             // Private
-            // New Class Library project - IHSLibs1 - public string GetMyName() return "Ian..."
-            // add reference (Dependencies, Projects, IHSLibs1)
-            // Using IHSLibs1 // need to import
-            Class1 IHSClass1 = new Class1();
-            string myName = IHSClass1.GetMyName();
-            Console.WriteLine($"IHSClass1 = Name: {myName}");
+            // New Class Library project - IHSLibs - public string GetMyName() return "Ian..."
+            // add reference (Dependencies, Projects, IHSLibs)
+            // Using IHSLibs // need to import
+            MyClassLogic IHSClass = new MyClassLogic();
+            string myName = IHSClass.GetMyName();
+            Console.WriteLine($"IHSClass = Name: {myName}");
 
 
-            // Public
-            // New Class Library project - IHSLibs2 - public void Print(message)
-            //      Console.WriteLine($"Print from IHSLibs2: {message}");
+
+
+            // Public - Cannot do with .NET Core (this project), need .NET Framework
+            // AssemblyTest = .NET Framework
+            // AssemblyTestLibrary = .NET Framework
+            // New Class Library project - AssemblyTestLibrary - public void Print(message)
+            //      Console.WriteLine($"Print from AssemblyTestLibrary: {message}");
             // GAC (Global Assembly Cache) = create key, sign project, install
             //      (create key) CMD Admin =     sn -k "myStrongKey.snk" // store this anywhere (desktop)
             //      (assign key) Visual Studio = properties - signing - sing the assembly (with key)
-            //      (refrence) IHSLibs2 - copy local property false
-            //      (install) CMD Admin =   gacutil -i "C:\Users\ianea\source\repos\C8_In4Hours\IHSLibs2\bin\Debug\netcoreapp3.1\IHSLibs2.dll"
-            //      (uninstall) CMD Admin = gacutil -u IHSLibs2
+            //      (refrence) AssemblyTestLibrary - copy local property false
+            //      (install) CMD Admin =   gacutil -i "C:\Users\ianea\source\repos\C8_In4Hours\AssemblyTestLibrary\bin\Debug\AssemblyTestLibrary.dll"
+            //      (uninstall) CMD Admin = gacutil -u AssemblyTestLibrary
             // add reference (Dependencies, Assemblies, IHSLibs2)
-            // Using IHSLibs2 // need to import
-            Class2 IHSClass2 = new Class2();
-            IHSClass2.Print("Hi IHS");
-            IHSLibs2.Class2.MyPrint("Hi IHS again");
+            // Using AssemblyTestLibrary; // need to import
+
+            // Need to update GAC when update Library
+            // gacutil -i "C:\Users\ianea\source\repos\C8_In4Hours\AssemblyTestLibrary\bin\Debug\AssemblyTestLibrary.dll"
+            // gacutil -u AssemblyTestLibrary
+
+            /* AssemblyTest
+            AssemblyTestLibraryLogic myName = new AssemblyTestLibraryLogic();
+            Console.WriteLine($"Logic: {myName.GetMyName()}");
+            myName.Print("Hello");
+            Console.ReadLine();
+            */
 
             CheckAssembly(1, 0); // System.Core
-            CheckAssembly(1, 1); // IHSLibs2
-            CheckAssembly(2, 2); // Full IHSLibs2 location
+            CheckAssembly(1, 1); // AssemblyTestLibrary
+            CheckAssembly(2, 2); // Full AssemblyTestLibrary location
         }
         public void CheckAssembly(int location, int name)
         {
@@ -106,18 +121,17 @@ namespace C8_In4Hours
 
             if (location == 0) locationStr = @"C:\Windows\assembly\"; // .NET 3.5 and below
             if (location == 1) locationStr = @"C:\Windows\Microsoft.NET\assembly\GAC_MSIL\";
-            if (location == 2) locationStr = @"C:\Windows\Microsoft.NET\assembly\GAC_MSIL\IHSLibs2\v4.0_1.0.0.0__22e507a759643b56\";
+            if (location == 2) locationStr = @"C:\Windows\Microsoft.NET\assembly\GAC_MSIL\AssemblyTestLibrary\v4.0_1.0.0.0__22e507a759643b56\";
 
             if (name == 0) nameStr = @"System.Core";
-            if (name == 1) nameStr = @"IHSLibs2";
-            if (name == 2) nameStr = @"IHSLibs2.dll";
+            if (name == 1) nameStr = @"AssemblyTestLibrary";
+            if (name == 2) nameStr = @"AssemblyTestLibrary.dll";
 
             CheckAssembly(locationStr, nameStr);
         }
-
         public void CheckAssembly(string location, string name)
         {
-            string file = location + name; // @"C:\Windows\assembly\IHSLibs2.dll"
+            string file = location + name; // @"C:\Windows\Microsoft.NET\assembly\GAC_MSIL\AssemblyTestLibrary.dll"
 
             Console.WriteLine($"\tLooking for: {file}");
             
@@ -130,8 +144,8 @@ namespace C8_In4Hours
                 
                 Console.WriteLine($"\tYes, the file is an assembly : {testAssembly.FullName}");
                 
-                Assembly myDll = Assembly.Load("IHSLibs2"); //IHSLibs2 cannot find??
-                Console.WriteLine($"\t{myDll.FullName}");
+                //Assembly myDll = Assembly.Load("AssemblyTestLibrary"); //AssemblyTestLibrary cannot find??
+                //Console.WriteLine($"\t{myDll.FullName}");
             }
             catch (System.IO.FileNotFoundException)
             {
