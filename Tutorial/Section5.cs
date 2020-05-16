@@ -44,6 +44,13 @@ namespace C8_In4Hours
         // Anonymous collection, use like enum (myAnonymousVar.CompanyName)
         var myAnonymousVars = new { CompanyName = "Hi", Year = 2000 }; 
 
+        // Set delegate like method
+        delegate void PrintDel(string message);
+        // Call delegate like class
+        PrintDel print = new PrintDel(MyPrintMethod);
+        // or assign delegate
+        PrintDel print = PrintShort; // method 1
+        log += PrintLong;          // method 2
 
          */
 
@@ -56,8 +63,7 @@ namespace C8_In4Hours
 
 
 
-        //Advanced Programming Concepts in C#
-        //   5.1 Assemblies, GAC, Exe/ DLL, private/ public class library
+        // Assemblies (EXE/ DLL), GAC, private/ public class library
         public void Lesson5_1()
         {
             //compile/ build, debug exe, EXE vs DDL, 
@@ -81,8 +87,6 @@ namespace C8_In4Hours
             MyClassLogic IHSClass = new MyClassLogic();
             string myName = IHSClass.GetMyName();
             Console.WriteLine($"IHSClass = Name: {myName}");
-
-
 
 
             // Public - Cannot do with .NET Core (this project), need .NET Framework
@@ -167,7 +171,7 @@ namespace C8_In4Hours
             }
         }
 
-        //   5.2 Var, Nullable/ Anonymous Types, Value vs Reference
+        // Value vs Reference, Var, Nullable variables, Var acts like Enum without name (Anonymous Types)
         public void Lesson5_2()
         {
             // Value Type, Reference Type
@@ -202,26 +206,68 @@ namespace C8_In4Hours
             Console.WriteLine("");
         }
 
-        //   5.3 Delegates and Multicast Delegates, pass method as param
+        
+        // Delegates and Multicast Delegates, pass method as param
+        // defines method signature, looks for methods with the same return and paramaters
         public void Lesson5_3()
         {
+            // e.g. delegate int Calculate(int first, int second);
+            // look for:  return(int)   params(int, int)
+            // found:	int Add (int x, int y)
+            Console.WriteLine("");
+            Console.WriteLine("");
 
+            // Assign delegate either new Method or equals method
+            Calculate cal = new Calculate(Add);
+            //Calculate cal = new Calculate(Sub);
+            // or
+            //PrintDel log = PrintShort;
+
+            Console.WriteLine(cal(10, 15)); // Could be either Add or Sub
+            // or 
+            // cal.Invoke(10, 15); 
+
+            // Multicast delegates - Print methods
+            PrintDel log = PrintShort; // method 1
+            log += PrintLong;          // method 2
+
+            log("Hello"); // Prints twice
+        }
+        // Lesson 5_3 delegates
+        delegate int Calculate(int first, int second);
+        delegate void PrintDel(string message);
+        // Add, Sub and Print used for Lesson5_3
+        public int Add(int x, int y)
+        {
+            return x + y;
+        }
+        public int Sub(int x, int y)
+        {
+            return x - y;
+        }
+        public void PrintShort(string message)
+        {
+            Console.WriteLine($"\tPrint: {message}");
+        }
+        public void PrintLong(string message)
+        {
+            Console.WriteLine($"\tPrint from Long: {message}");
         }
 
-        //   5.4 Anonymous Methods and Lambda Expressions
-        //  In-line anonymous method
+        // Anonymous Methods and Lambda Expressions
+        // In-line anonymous method/ using =>
         public void Lesson5_4()
         {
-
+            //MyDelegate del = (string msg) =>  Console.WriteLine(msg);
         }
 
-        //   5.5 Generics and Events, Gen vs Array
+        // Generics and Events, Gen vs Array, lists and methods acting on other methods actions
         public void Lesson5_5()
         {
 
         }
 
-        //   5.6 Asynchronous Programming, Await Win Forms
+        // Asynchronous Programming, Await Win Forms, keep app running, click and move on
         public void Lesson5_6()
         {
 
