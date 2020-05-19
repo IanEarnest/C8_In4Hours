@@ -18,6 +18,8 @@ namespace C8_In4Hours
         // Question - useful encapsulation?
         // Question - why use abstract instead of inheriting (hides class?)
         // Question - GAC for .NET Core?
+        // Question - mutable vs immutable (change state and don't change state)
+                                //(encapsulation - change of variables)
 
         // Tips - use $: Console.WriteLine($"Name: {name}, Age: {age}");
         // C# use "ref" keyword for direct reference to variable instead of copies
@@ -57,7 +59,16 @@ namespace C8_In4Hours
 
             // Section 6 = Project
             S6.PrintHello();
-            //Console.ReadLine();
+
+            //KeepOpen(); //Console.ReadLine();
+
+        }
+
+        public static void KeepOpen()
+        {
+            // Keep the console window open in debug mode.
+            Console.WriteLine("Press any key to exit.");
+            Console.ReadKey();
         }
 
         // Lessons from Section 1

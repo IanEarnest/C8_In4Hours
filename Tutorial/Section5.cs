@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using IHSLibs;
+using Tutorial;
 
 namespace C8_In4Hours
 {
@@ -52,6 +55,8 @@ namespace C8_In4Hours
         PrintDel print = PrintShort; // method 1
         log += PrintLong;          // method 2
 
+
+            "LessonExtend" from a tutorial, not working
          */
 
         /// <summary> Prints "Hello World!"
@@ -218,12 +223,13 @@ namespace C8_In4Hours
             Console.WriteLine("");
 
             // Assign delegate either new Method or equals method
-            Calculate cal = new Calculate(Add);
+            //Calculate cal = new Calculate(Add);
             //Calculate cal = new Calculate(Sub);
             // or
-            //PrintDel log = PrintShort;
+            //Calculate cal = Add;
 
-            Console.WriteLine(cal(10, 15)); // Could be either Add or Sub
+            Calculate cal = new Calculate(Add);
+            Console.WriteLine($"delegate cal: {cal(10, 15)}"); // Could be either Add or Sub
             // or 
             // cal.Invoke(10, 15); 
 
@@ -231,11 +237,11 @@ namespace C8_In4Hours
             PrintDel log = PrintShort; // method 1
             log += PrintLong;          // method 2
 
-            log("Hello"); // Prints twice
+            log("Multicast delegate = Print log x 2: Log"); // Prints twice
         }
         // Lesson 5_3 delegates
-        delegate int Calculate(int first, int second);
-        delegate void PrintDel(string message);
+        public delegate int Calculate(int first, int second);
+        public delegate void PrintDel(string message);
         // Add, Sub and Print used for Lesson5_3
         public int Add(int x, int y)
         {
@@ -247,24 +253,186 @@ namespace C8_In4Hours
         }
         public void PrintShort(string message)
         {
-            Console.WriteLine($"\tPrint: {message}");
+            Console.WriteLine($"\tPrintShort: {message}");
         }
         public void PrintLong(string message)
         {
-            Console.WriteLine($"\tPrint from Long: {message}");
+            Console.WriteLine($"\tPrintLong: {message}");
         }
 
+
+        // Same as PrintDel
+        //public delegate void PrintDelegate(string param);
+        public void PrintShortDel(PrintDel message)
+        {
+            Console.WriteLine("PrintShortDel(PrintDel) called");
+            message("Callback"); // callback with "message"
+        }
         // Anonymous Methods and Lambda Expressions
         // In-line anonymous method/ using =>
         public void Lesson5_4()
         {
-            //MyDelegate del = (string msg) =>  Console.WriteLine(msg);
-        }
+            // Anonymous method = inline without name
+            // public delegate void PrintDel(string message);
+            // public void PrintShortDel(PrintDel message)
+            int i = 0;
 
+
+            // Calling above method "PrintShortDel" + printing message from that method "Callback"
+            // Performs "PrintShortDel" first then the delegate methods
+
+
+            // inline (named method) using Lambda
+            PrintDel log = (message) => Console.WriteLine($"{message}");
+            log("Inline delegate Lambda");
+
+
+            // delegate (printDelegate) contains PrintShort(string message) method
+            //"PrintShortDel(PrintDel) called"
+            //          PrintShort: Callback
+            //          PrintShort: "PrintDel calling PrintShort"
+            PrintDel HiPrint1 = new PrintDel(PrintShort);
+            PrintShortDel(HiPrint1);
+            HiPrint1("PrintDel calling PrintShort");
+
+            // Anonymous method using Lambda
+            //delegate void PrintDel(string message);
+            //"PrintShortDel(PrintDel) called"
+            //          L0: Callback
+            //          L0: "PrintDel calling PrintShort"
+            PrintDel HiPrint2 = new PrintDel((message) => Console.WriteLine($"\tL0:{message}"));
+            PrintShortDel(HiPrint2);
+            HiPrint2("PrintDel calling PrintShort");
+
+            // Delegate anonymous method - inline
+            //"PrintShortDel(PrintDel) called"
+            //          "Print: Callback 1""
+            i++;
+            PrintShortDel(delegate (string message) 
+            {
+                Console.WriteLine($"\tPrint: {message} {i}");
+            });
+            
+
+
+            //Lambda
+            // params, statement (delegate)
+            //=>
+
+
+            // Single line Lambda for PrintShortDel(PrintDel)
+            //"PrintShortDel(PrintDel) called"
+            //          "L1: Callback 2""
+            i++;
+            PrintShortDel((message) => Console.WriteLine($"\tL1: {message} {i}"));
+
+
+            // Multi-line Lambda for PrintShortDel(PrintDel)
+            //"PrintShortDel(PrintDel) called"
+            //          "L2.1: Callback 3""
+            //          "L2.2: Callback 3""
+            i++;
+            PrintShortDel((message) =>
+            {
+                Console.WriteLine($"\tL2.1: {message} {i}");
+                Console.WriteLine($"\tL2.2: {message} {i}");
+            });
+
+
+
+            //C#1               - initialization with named method
+            //PrintDel HiPrint1 = new PrintDel(PrintShort);
+            //C#2               - initialization with inline code
+            //PrintDel HiPrint1 = delegate (string message) { Console.WriteLine($"\{message}"); };
+            //C#3               - initialization with lambda expression
+            //PrintDel HiPrint1 = (message) => { Console.WriteLine($"{message}"); };
+        }
+        public void LessonExtend()
+        {
+            // Other stuff
+            Console.WriteLine($"11am: {GetGreetingM(11)}"); // 11am
+            // vs
+            Console.WriteLine($"1pm: {GetGreeting(13)}"); // afternoon
+
+            Console.WriteLine($"Greeting: {Greeting()}");
+
+
+            // Extend method - not working
+            string myButton = new StringBuilder()
+                .Append("Hello ")
+                //.AppendWhen(" my ", isMy)
+                .Append("World")
+                .ToString();
+            Console.WriteLine($"StringBuilder {myButton}"); // Hello World
+            // AppendWhen = true
+            //AppendWhen(new StringBuilder(), "hi", true); // use above in myButton?
+            Console.WriteLine($"StringBuilder extend {myButton}"); // Hello my World
+        }
+        public string GetGreeting(int hour) => hour < 12 ? "Good Morning" : "Good Afternoon";
+        public string GetGreetingM(int hour)
+        {
+            string greeting; // placeholder
+
+            if (hour < 12)
+                greeting = "Good Morning";
+            else
+                greeting = "Good Afternoon";
+            
+            return greeting;
+        }
+        public string Greeting() => new StringBuilder()
+            .Append("Hello ")
+            .Append(" World ")
+            .ToString()
+            .TrimEnd()
+            .ToUpper(); // HELLO WORLD
+
+        //public StringBuilder AppendWhen(this StringBuilder sb, string value, bool predicate) 
+        //    => predicate ? sb.Append(value) : sb;
+        
         // Generics and Events, Gen vs Array, lists and methods acting on other methods actions
         public void Lesson5_5()
         {
+            // Generic class/ method, <T> (type parameter)
 
+            //  class Section5_MyGClass<T> //<T> added to make it generic
+            //      public void Print(T param)
+            Console.WriteLine("");
+            Console.WriteLine("");
+
+            // Generic - string
+            Section5_MyGClass<string> strGClass = new Section5_MyGClass<string>();
+            strGClass.Print("My String");
+
+            // Generic - int
+            Section5_MyGClass<int> intGClass = new Section5_MyGClass<int>();
+            intGClass.Print(10);
+
+            // List VS Arrays
+            List<int> intList = new List<int>();
+            intList.Add(10);
+            intList.Add(5);
+            Console.WriteLine($"intList: 0={intList[0]}");
+
+
+            // Events - publisher/ subscriber
+            /*
+                
+                Section5_CustClass
+	                CustID property
+	                CustName property
+
+                Section5_CustEventArg
+	                CustName property
+	                Store property
+
+                Section5_CustBiz
+                public event EventHandler<Section5_CustEventArg> customerAdded;
+	                AddCustomer(Section5_CustClass cust)
+		                print "adding a new customer"
+		                System.Threading.Thread.Sleep(3000); // Wait for 3 seconds
+		                this.CusAdded...
+             */
         }
 
         // Asynchronous Programming, Await Win Forms, keep app running, click and move on
