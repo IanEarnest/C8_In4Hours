@@ -433,12 +433,64 @@ namespace C8_In4Hours
 		                System.Threading.Thread.Sleep(3000); // Wait for 3 seconds
 		                this.CusAdded...
              */
+
+            // New CustomerBiz class, add event listener onto method, add customer
+            Section5_CustomerBiz objCustomerBiz = new Section5_CustomerBiz();
+            objCustomerBiz.CustomerAdded += objCustomerBiz_CustomerAdded;
+
+            Section5_Customer newCustomer = new Section5_Customer() 
+            {
+                CustomerID = 12,
+                CustomerName = "Steve"
+            };
+            
+            // Add customer contains wait method
+            objCustomerBiz.AddCustomer(newCustomer);
+            objCustomerBiz.AddCustomer((new Section5_Customer {CustomerID=22, CustomerName="John" }));
         }
+
+        //class Section5_CustomerEventArg
+           //public string StoreName { get; set; }
+           // public string CustomerName { get; set; }
+        static void objCustomerBiz_CustomerAdded(object sender, Section5_CustomerEventArg e)
+        {
+            Console.WriteLine($"Customer: {e.CustomerName} added to store {e.StoreName}");
+        }
+
 
         // Asynchronous Programming, Await Win Forms, keep app running, click and move on
         public void Lesson5_6()
         {
+            /* Using the IssueTrackerApp form
+             Windows forms app - two buttons (button1, button2) and a Calcualte method
 
+             // Artificial wait
+                private int Calculate()
+                {
+	                int total = 40;
+	                System.Threading.Thread.Sleep(3000);
+	                return total;
+                }
+
+
+                // button1
+                "private void mybutton1"
+                {
+	                int result = 0;
+	                result = Calculate();
+	                MessageBox.Show($"Result : {result}");	
+                }
+
+                // button2 async
+                "private async void mybutton2"
+                {
+	                // task int = int calculate
+	                Task<int> task = new Task<int>(Calculate);
+	                task.Stat();
+	                result = await task;
+	                MessageBox.Show($"Result : {result}");
+                }
+             */
         }
     }
 }

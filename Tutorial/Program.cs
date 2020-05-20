@@ -31,6 +31,7 @@ namespace C8_In4Hours
         // Trip planner - store Hotel reservations tickets, weblinks, important phone numbers, addresses of places to visit and restaurants
         // Build/ Compile, CLR(JIT), MSIL, Machine Language
         // AFTER = Old projects, basic examples to put on portfolio
+        // Make all Sections examples fit the same case (e.g. BugFixer (bugname, description etc))
 
         static void Main(string[] args)
         {
