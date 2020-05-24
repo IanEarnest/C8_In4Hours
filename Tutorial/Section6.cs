@@ -51,36 +51,38 @@ namespace C8_In4Hours
             // "Service issue - 102 has been resolved at 2/24/2019 6:02:41"
             //All Issues Section (in a data grid)
             //	Issue ID, Title, Description, Priority, Status
+            //  IssueID, IssueTitle, IssueDesc, IssuePriority, IssueStatus
+            //Datagrid = Columns - Issue ID, Title, Description, Priority, Status (Set each DataPropertyName)
             //	Buttons         - Load
 
 
             //Steps
-	        //1. Design UI
-	        //2. Create Class Library Project - IssuesBusinessLogic
-	        //3. Create folder Entities
-		       // Create Classes:
-			      //  Enum Status (Open, InProgress, Closed)
-			      //  Enum Priority (Low, Medium, High)
-			      //  (IssueBase inherited by OperationalIssue/ ServiceIssue/ EngineeringIssue)
-                  //  (OperationalIssue... - override ResolveIssue())
-			      //  Abstract Class - IssueBase
-					    //    IssueID           int
-					    //    IssueTitle        string
-					    //    IssueDesc         string
-					    //    IssueStatus       Status
-					    //    IssuePriority     Priority
-					    //    String            ResolveIssue() Abstract Method   //return string
-	        //4. Interface IssueBizContract (implemented by IssuesBiz)
-			      //  GetAllIssues    List<IssueBase>
-			      //  GetAllIssueType List<string> 
-			      //  string          GetIssueTypes   (IssueBase issue);
-			      //  List<Status>    GetAllStatus    ();
-			      //  List<Priority>  GetAllPriority  ();
-			      //  int             AddIssue        (IssueBase issue);
-			      //  int             UpdateIssue     (IssueBase issue);
-			      //  void            ResolveIssue    (IssueBase issue);
-			      //  CloseIssue?
-         //   5. IssueTrackerInfrastructure (LogHleper, LogDetail)
+            //1. Design UI
+            //2. Create Class Library Project - IssuesBusinessLogic
+            //3. Create folder Entities
+            // Create Classes:
+            //  Enum Status (Open, InProgress, Closed)
+            //  Enum Priority (Low, Medium, High)
+            //  (IssueBase inherited by OperationalIssue/ ServiceIssue/ EngineeringIssue)
+            //  (OperationalIssue... - override ResolveIssue())
+            //  Abstract Class - IssueBase
+            //    IssueID           int
+            //    IssueTitle        string
+            //    IssueDesc         string
+            //    IssueStatus       Status
+            //    IssuePriority     Priority
+            //    String            ResolveIssue() Abstract Method   //return string
+            //4. Interface IssueBizContract (implemented by IssuesBiz)
+            //  GetAllIssues    List<IssueBase>
+            //  GetAllIssueType List<string> 
+            //  string          GetIssueTypes   (IssueBase issue);
+            //  List<Status>    GetAllStatus    ();
+            //  List<Priority>  GetAllPriority  ();
+            //  int             AddIssue        (IssueBase issue);
+            //  int             UpdateIssue     (IssueBase issue);
+            //  void            ResolveIssue    (IssueBase issue);
+            //  CloseIssue?
+            //   5. IssueTrackerInfrastructure (LogHleper, LogDetail)
         }
         //   6.2 UI, controls, buttons
         public void Lesson6_2()
@@ -131,20 +133,26 @@ namespace C8_In4Hours
         //   6.4 Events in Win Form Project
         public void Lesson6_4()
         {
-        //tips - formLoadEvent, cmbPriority - DropdownStyle - dropdown property
-        //Datagrid = Columns - Issue ID, Title, Description, Priority, Status (Set each DataPropertyName)
+            //tips -
+            //DropdownStyle - dropdown property??
 
-        //Improvements - EngineeringIssue... Into 1 class (IssueClasses)
-        //	 	Enums into 1 class (EnumClass)
-        //	Add tests
-        //	Data is in memory list, use persistan storage/ file?
-        //		IS.StreamWriter, searilaize, BinaryFormatter
-        //		SQL Server Compact or lightweight database
-        //      https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-3.0/182eeyhh(v=vs.85)?redirectedfrom=MSDN
-        //      XMLSerializer
-        //      https://docs.microsoft.com/en-us/dotnet/api/system.xml.serialization.xmlserializer?redirectedfrom=MSDN&view=netcore-3.1
-        //      Serialize
-        //      https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-3.0/szzyf24s%28v%3dvs.85%29
+
+            //Improvements - 
+            // Function: Restrict input (id = auto generated)
+            //              Search?
+            //              Table order by...
+            //              
+            // Code: EngineeringIssue... Into 1 class (IssueClasses)
+            //	 	    Enums into 1 class (EnumClass)
+            //	        Add tests
+            //	    Data is in memory list, use persistan storage/ file?
+            //		IS.StreamWriter, searilaize, BinaryFormatter
+            //		SQL Server Compact or lightweight database
+            //      https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-3.0/182eeyhh(v=vs.85)?redirectedfrom=MSDN
+            //      XMLSerializer
+            //      https://docs.microsoft.com/en-us/dotnet/api/system.xml.serialization.xmlserializer?redirectedfrom=MSDN&view=netcore-3.1
+            //      Serialize
+            //      https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-3.0/szzyf24s%28v%3dvs.85%29
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IssuesBusinessLogic.Entities
 {
-    class OperationalIssue : IssueBase
+    public class OperationalIssue : IssueBase
     {
         protected internal override string ResolveIssue()
         {
