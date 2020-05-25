@@ -138,10 +138,15 @@ namespace C8_In4Hours
 
 
             //Improvements - 
-            // Function: Restrict input (id = auto generated)
-            //              Search?
-            //              Table order by...
-            //              
+            // Function: Restrict input (if description and title empty, disable save)
+            //              ID = auto
+            //              database - connect to database or save file for issues
+            //              delete/ archive issues - remove issues, have a toggle for archived, only hide them, not delete from list
+            //              useful log detail - ?
+            //              search - seach
+            //              table order by
+            //ISSUE - sometimes Saves wrong ID?
+
             // Code: EngineeringIssue... Into 1 class (IssueClasses)
             //	 	    Enums into 1 class (EnumClass)
             //	        Add tests

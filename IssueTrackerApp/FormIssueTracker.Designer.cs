@@ -45,7 +45,6 @@
             this.cmbStatus = new System.Windows.Forms.ComboBox();
             this.txtIssueDesc = new System.Windows.Forms.TextBox();
             this.txtIssueTitle = new System.Windows.Forms.TextBox();
-            this.txtIssueID = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lstLogs = new System.Windows.Forms.ListBox();
             this.dgrdIssues = new System.Windows.Forms.DataGridView();
@@ -58,6 +57,7 @@
             this.btnLoad = new System.Windows.Forms.Button();
             this.btnLog = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.labelIssueID = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgrdIssues)).BeginInit();
@@ -141,6 +141,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.labelIssueID);
             this.groupBox1.Controls.Add(this.cmbPriorityList);
             this.groupBox1.Controls.Add(this.btnResolve);
             this.groupBox1.Controls.Add(this.btnSave);
@@ -150,7 +151,6 @@
             this.groupBox1.Controls.Add(this.txtIssueDesc);
             this.groupBox1.Controls.Add(this.txtIssueTitle);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.txtIssueID);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
@@ -233,14 +233,6 @@
             this.txtIssueTitle.Name = "txtIssueTitle";
             this.txtIssueTitle.Size = new System.Drawing.Size(366, 22);
             this.txtIssueTitle.TabIndex = 8;
-            // 
-            // txtIssueID
-            // 
-            this.txtIssueID.Location = new System.Drawing.Point(187, 24);
-            this.txtIssueID.Name = "txtIssueID";
-            this.txtIssueID.Size = new System.Drawing.Size(366, 22);
-            this.txtIssueID.TabIndex = 0;
-            this.txtIssueID.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // groupBox2
             // 
@@ -359,6 +351,14 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // labelIssueID
+            // 
+            this.labelIssueID.AutoSize = true;
+            this.labelIssueID.Location = new System.Drawing.Point(184, 24);
+            this.labelIssueID.Name = "labelIssueID";
+            this.labelIssueID.Size = new System.Drawing.Size(0, 17);
+            this.labelIssueID.TabIndex = 16;
+            // 
             // FormIssueTracker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -397,7 +397,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox txtIssueID;
         private System.Windows.Forms.ListBox lstLogs;
         private System.Windows.Forms.ComboBox cmbPriorityList;
         private System.Windows.Forms.Button btnResolve;
@@ -417,6 +416,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn IssueStatus;
         private System.Windows.Forms.Button btnLog;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label labelIssueID;
     }
 }
 
