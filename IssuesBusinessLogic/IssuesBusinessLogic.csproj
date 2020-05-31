@@ -51,6 +51,7 @@
     <Compile Include="IssueBizContract.cs" />
     <Compile Include="IssuesBiz.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MyFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IssuesTrackerInfrastructure\IssuesTrackerInfrastructure.csproj">

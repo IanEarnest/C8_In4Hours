@@ -2,6 +2,7 @@
 using IssuesTrackerInfrastructure;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +29,9 @@ namespace IssuesBusinessLogic
             //Initial Data
             //3 hardcoded issues
             allIssues = new HardCodedIssues().Examples();
+            
+            //MyFile.Save("Hello world");
+            //string MyString = MyFile.Load();
         }
 
         
@@ -59,6 +63,15 @@ namespace IssuesBusinessLogic
 
 
             return issue.IssueID;
+        }
+
+        public void LoadBackup()
+        {
+            allIssues = new List<IssueBase>(MyFile.LoadBackup());
+        }
+        public void SaveBackup()
+        {
+            MyFile.SaveBackup(allIssues);
         }
 
         /// <summary>

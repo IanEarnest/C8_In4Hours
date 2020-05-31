@@ -37,13 +37,13 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnRemove = new System.Windows.Forms.Button();
             this.labelIssueID = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnNewForm = new System.Windows.Forms.Button();
             this.cmbPriorityList = new System.Windows.Forms.ComboBox();
             this.btnResolve = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            this.btmNew = new System.Windows.Forms.Button();
+            this.btnNew = new System.Windows.Forms.Button();
             this.cmbType = new System.Windows.Forms.ComboBox();
             this.cmbStatus = new System.Windows.Forms.ComboBox();
             this.txtIssueDesc = new System.Windows.Forms.TextBox();
@@ -59,10 +59,12 @@
             this.Resolved = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.label7 = new System.Windows.Forms.Label();
             this.btnLoad = new System.Windows.Forms.Button();
-            this.btnLog = new System.Windows.Forms.Button();
+            this.btnAutofill = new System.Windows.Forms.Button();
             this.chkBoxShowResolved = new System.Windows.Forms.CheckBox();
             this.btnAutoClick = new System.Windows.Forms.Button();
-            this.ReLoadIssues = new System.Windows.Forms.Button();
+            this.btnReLoadIssues = new System.Windows.Forms.Button();
+            this.btnSaveBackup = new System.Windows.Forms.Button();
+            this.btnLoadBackup = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgrdIssues)).BeginInit();
@@ -146,12 +148,12 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.btnDelete);
+            this.groupBox1.Controls.Add(this.btnRemove);
             this.groupBox1.Controls.Add(this.labelIssueID);
             this.groupBox1.Controls.Add(this.cmbPriorityList);
             this.groupBox1.Controls.Add(this.btnResolve);
             this.groupBox1.Controls.Add(this.btnSave);
-            this.groupBox1.Controls.Add(this.btmNew);
+            this.groupBox1.Controls.Add(this.btnNew);
             this.groupBox1.Controls.Add(this.cmbType);
             this.groupBox1.Controls.Add(this.cmbStatus);
             this.groupBox1.Controls.Add(this.txtIssueDesc);
@@ -169,15 +171,15 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Add/ Edit Issue";
             // 
-            // btnDelete
+            // btnRemove
             // 
-            this.btnDelete.Location = new System.Drawing.Point(515, 253);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(75, 23);
-            this.btnDelete.TabIndex = 17;
-            this.btnDelete.Text = "Remove";
-            this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.btnRemove_Click);
+            this.btnRemove.Location = new System.Drawing.Point(515, 253);
+            this.btnRemove.Name = "btnRemove";
+            this.btnRemove.Size = new System.Drawing.Size(75, 23);
+            this.btnRemove.TabIndex = 17;
+            this.btnRemove.Text = "Remove";
+            this.btnRemove.UseVisualStyleBackColor = true;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // labelIssueID
             // 
@@ -187,15 +189,15 @@
             this.labelIssueID.Size = new System.Drawing.Size(0, 17);
             this.labelIssueID.TabIndex = 16;
             // 
-            // button3
+            // btnNewForm
             // 
-            this.button3.Location = new System.Drawing.Point(626, 12);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(97, 26);
-            this.button3.TabIndex = 13;
-            this.button3.Text = "New form";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.btnNewForm_Click);
+            this.btnNewForm.Location = new System.Drawing.Point(626, 12);
+            this.btnNewForm.Name = "btnNewForm";
+            this.btnNewForm.Size = new System.Drawing.Size(97, 26);
+            this.btnNewForm.TabIndex = 13;
+            this.btnNewForm.Text = "New form";
+            this.btnNewForm.UseVisualStyleBackColor = true;
+            this.btnNewForm.Click += new System.EventHandler(this.btnNewForm_Click);
             // 
             // cmbPriorityList
             // 
@@ -225,15 +227,15 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // btmNew
+            // btnNew
             // 
-            this.btmNew.Location = new System.Drawing.Point(186, 252);
-            this.btmNew.Name = "btmNew";
-            this.btmNew.Size = new System.Drawing.Size(75, 23);
-            this.btmNew.TabIndex = 12;
-            this.btmNew.Text = "New";
-            this.btmNew.UseVisualStyleBackColor = true;
-            this.btmNew.Click += new System.EventHandler(this.btnNew_Click);
+            this.btnNew.Location = new System.Drawing.Point(186, 252);
+            this.btnNew.Name = "btnNew";
+            this.btnNew.Size = new System.Drawing.Size(75, 23);
+            this.btnNew.TabIndex = 12;
+            this.btnNew.Text = "New";
+            this.btnNew.UseVisualStyleBackColor = true;
+            this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
             // 
             // cmbType
             // 
@@ -380,15 +382,15 @@
             this.btnLoad.UseVisualStyleBackColor = true;
             this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
-            // btnLog
+            // btnAutofill
             // 
-            this.btnLog.Location = new System.Drawing.Point(223, 12);
-            this.btnLog.Name = "btnLog";
-            this.btnLog.Size = new System.Drawing.Size(97, 26);
-            this.btnLog.TabIndex = 12;
-            this.btnLog.Text = "Autofill";
-            this.btnLog.UseVisualStyleBackColor = true;
-            this.btnLog.Click += new System.EventHandler(this.btnAutofill_Click);
+            this.btnAutofill.Location = new System.Drawing.Point(223, 12);
+            this.btnAutofill.Name = "btnAutofill";
+            this.btnAutofill.Size = new System.Drawing.Size(97, 26);
+            this.btnAutofill.TabIndex = 12;
+            this.btnAutofill.Text = "Autofill";
+            this.btnAutofill.UseVisualStyleBackColor = true;
+            this.btnAutofill.Click += new System.EventHandler(this.btnAutofill_Click);
             // 
             // chkBoxShowResolved
             // 
@@ -411,26 +413,48 @@
             this.btnAutoClick.UseVisualStyleBackColor = true;
             this.btnAutoClick.Click += new System.EventHandler(this.btnNewIssue_Click);
             // 
-            // ReLoadIssues
+            // btnReLoadIssues
             // 
-            this.ReLoadIssues.Location = new System.Drawing.Point(468, 12);
-            this.ReLoadIssues.Name = "ReLoadIssues";
-            this.ReLoadIssues.Size = new System.Drawing.Size(152, 26);
-            this.ReLoadIssues.TabIndex = 16;
-            this.ReLoadIssues.Text = "ReLoadIssues";
-            this.ReLoadIssues.UseVisualStyleBackColor = true;
-            this.ReLoadIssues.Click += new System.EventHandler(this.ReLoadIssues_Click);
+            this.btnReLoadIssues.Location = new System.Drawing.Point(468, 12);
+            this.btnReLoadIssues.Name = "btnReLoadIssues";
+            this.btnReLoadIssues.Size = new System.Drawing.Size(152, 26);
+            this.btnReLoadIssues.TabIndex = 16;
+            this.btnReLoadIssues.Text = "ReLoadIssues";
+            this.btnReLoadIssues.UseVisualStyleBackColor = true;
+            this.btnReLoadIssues.Click += new System.EventHandler(this.ReLoadIssues_Click);
+            // 
+            // btnSaveBackup
+            // 
+            this.btnSaveBackup.Location = new System.Drawing.Point(918, 0);
+            this.btnSaveBackup.Name = "btnSaveBackup";
+            this.btnSaveBackup.Size = new System.Drawing.Size(97, 46);
+            this.btnSaveBackup.TabIndex = 17;
+            this.btnSaveBackup.Text = "Save (BACKUP)";
+            this.btnSaveBackup.UseVisualStyleBackColor = true;
+            this.btnSaveBackup.Click += new System.EventHandler(this.btnSaveBackup_Click);
+            // 
+            // btnLoadBackup
+            // 
+            this.btnLoadBackup.Location = new System.Drawing.Point(1021, 0);
+            this.btnLoadBackup.Name = "btnLoadBackup";
+            this.btnLoadBackup.Size = new System.Drawing.Size(97, 46);
+            this.btnLoadBackup.TabIndex = 18;
+            this.btnLoadBackup.Text = "Load (BACKUP)";
+            this.btnLoadBackup.UseVisualStyleBackColor = true;
+            this.btnLoadBackup.Click += new System.EventHandler(this.btnLoadBackup_Click);
             // 
             // FormIssueTracker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1130, 719);
-            this.Controls.Add(this.ReLoadIssues);
+            this.Controls.Add(this.btnLoadBackup);
+            this.Controls.Add(this.btnSaveBackup);
+            this.Controls.Add(this.btnReLoadIssues);
             this.Controls.Add(this.btnAutoClick);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.btnNewForm);
             this.Controls.Add(this.chkBoxShowResolved);
-            this.Controls.Add(this.btnLog);
+            this.Controls.Add(this.btnAutofill);
             this.Controls.Add(this.btnLoad);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.dgrdIssues);
@@ -466,7 +490,7 @@
         private System.Windows.Forms.ComboBox cmbPriorityList;
         private System.Windows.Forms.Button btnResolve;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button btmNew;
+        private System.Windows.Forms.Button btnNew;
         private System.Windows.Forms.ComboBox cmbType;
         private System.Windows.Forms.ComboBox cmbStatus;
         private System.Windows.Forms.TextBox txtIssueDesc;
@@ -474,10 +498,10 @@
         private System.Windows.Forms.DataGridView dgrdIssues;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btnLoad;
-        private System.Windows.Forms.Button btnLog;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnAutofill;
+        private System.Windows.Forms.Button btnNewForm;
         private System.Windows.Forms.Label labelIssueID;
-        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnRemove;
         private System.Windows.Forms.CheckBox chkBoxShowResolved;
         private System.Windows.Forms.Button btnAutoClick;
         private System.Windows.Forms.DataGridViewTextBoxColumn IssueID;
@@ -486,7 +510,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn IssuePriority;
         private System.Windows.Forms.DataGridViewTextBoxColumn IssueStatus;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Resolved;
-        private System.Windows.Forms.Button ReLoadIssues;
+        private System.Windows.Forms.Button btnReLoadIssues;
+        private System.Windows.Forms.Button btnSaveBackup;
+        private System.Windows.Forms.Button btnLoadBackup;
     }
 }
 

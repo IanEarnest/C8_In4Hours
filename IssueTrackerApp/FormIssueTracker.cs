@@ -782,6 +782,17 @@ namespace IssueTrackerApp
             //_issueBiz = new IssuesBiz(_logHelper); //new IssuesBiz(_logHelper, 20);
             //_logHelper.LogUpdated += _logHelper_LogUpdated;
         }
+
+        private void btnSaveBackup_Click(object sender, EventArgs e)
+        {
+            _issueBiz.SaveBackup();
+        }
+
+        private void btnLoadBackup_Click(object sender, EventArgs e)
+        {
+            _issueBiz.LoadBackup();
+            LoadIssues();
+        }
         //public FormIssueTracker()
         //{
         //    InitializeComponent();

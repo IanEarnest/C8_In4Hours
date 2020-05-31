@@ -20,5 +20,7 @@ namespace IssuesBusinessLogic
 		void ResolveIssue(IssueBase issue);
 		void RemoveIssue(IssueBase issue);
 		bool GetIsIssueResolved(IssueBase issue);
+		void LoadBackup();
+        void SaveBackup();
 	}
 }
