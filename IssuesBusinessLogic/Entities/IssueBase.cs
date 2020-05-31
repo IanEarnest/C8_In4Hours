@@ -13,11 +13,13 @@ namespace IssuesBusinessLogic.Entities
         public string IssueDescription { get; set; }
         public Status IssueStatus { get; set; }
         public Priority IssuePriority { get; set; }
-
+        public bool isIssueResolved { get; set; }
         /// <summary>
         /// This method will be implemented differently in different Issue types(e.g. Operational Issues, Service Issues or Engineering Issues.
         /// </summary>
         /// <returns>string</returns>
         protected internal abstract string ResolveIssue();
+        //public string RemoveIssue(IssueBase issue)
+        
     }
 }

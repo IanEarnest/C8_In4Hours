@@ -10,56 +10,45 @@ namespace IssuesBusinessLogic
 {
     public class IssuesBiz : IssueBizContract
     {
-        //Initial Data
-        //3 hardcoded issues
-        List<IssueBase> allIssues = new List<IssueBase>() 
-        {
-            new EngineeringIssue 
-            { 
-                IssueID = 101, 
-                IssueTitle = "Browser Issue for Web portal", 
-                IssueDescription = "User is unable to load web site on IE.", 
-                IssuePriority = Priority.Medium, 
-                IssueStatus = Status.Open
-            },
-            new ServiceIssue 
-            { 
-                IssueID = 102, 
-                IssueTitle = "Need Customer Service Email", 
-                IssueDescription = "User needs email IT support as the call waiting is quite long. ", 
-                IssuePriority = Priority.High, 
-                IssueStatus = Status.Open
-            },
-            new OperationalIssue 
-            { 
-                IssueID = 103, 
-                IssueTitle = "Shipping Service in not available on weekends", 
-                IssueDescription = "Need to have some arrangements for shipping over weekends for running business 24X7", 
-                IssuePriority = Priority.High, 
-                IssueStatus = Status.InProgress
-            }
-        };
-
         // Also Priority, also GetIssueType() cases
-         //List<string> allIssueTypes = new List<string>()
-         //   {
-         //       "Operational",
-         //       "Service",
-         //       "Engineering"
-         //   };
-             
+        //List<string> allIssueTypes = new List<string>()
+        //   {
+        //       "Operational",
+        //       "Service",
+        //       "Engineering"
+        //   };
 
+
+        List<IssueBase> allIssues = new List<IssueBase>();
         //Log Helper Class object.
         private LogHelper _objLogHelper;
         public IssuesBiz(LogHelper logHelper)
         {
             _objLogHelper = logHelper;
+            //Initial Data
+            //3 hardcoded issues
+            allIssues = new HardCodedIssues().Examples();
         }
+
         
+        public IssuesBiz(LogHelper logHelper, int numOfIssues)
+        {
+            _objLogHelper = logHelper;
+            //Initial Data
+            //# hardcoded issues
+            allIssues = new HardCodedIssues().Examples(numOfIssues);
+        }
+
         //Method to Add new Issue
         public int AddIssue(IssueBase issue)
         {
+            // DO I NEED TO CHECK RESOLVED WHEN ADDED?
+            if (issue.IssueStatus == Status.Resolved)
+                issue.isIssueResolved = true;
+
             allIssues.Add(issue);
+            //SortIssues(); // need this?, new issue is always last and has highest number
+
 
             // ? why if statement
             //Log this infomation.
@@ -78,7 +67,19 @@ namespace IssuesBusinessLogic
         /// <param name="issue"></param>
         public void ResolveIssue(IssueBase issue)
         {
+            issue.isIssueResolved = true;
+            issue.IssueStatus = Status.Resolved; // can put in each "ServiceIssue"...
             string message = issue.ResolveIssue();
+            _objLogHelper.LogInfo(message);
+        }
+        /// <summary>
+        /// Remove issue - 
+        /// </summary>
+        /// <param name="issue"></param>
+        public void RemoveIssue(IssueBase issue)
+        {
+            allIssues.Remove(issue);
+            string message = $"{issue.IssueID} - has been removed from the database.";//issue.RemoveIssue();
             _objLogHelper.LogInfo(message);
         }
 
@@ -89,6 +90,19 @@ namespace IssuesBusinessLogic
         public List<IssueBase> GetAllIssues()
         {
             return allIssues;
+        }
+
+        public void SortIssues()
+        {
+            try
+            {
+                //allIssues.Sort();
+                allIssues = allIssues.OrderBy(o => o.IssueID).ToList();
+            }
+            catch (Exception)
+            {
+                _objLogHelper.LogInfo($"Sort failed");
+            }
         }
 
         /// <summary>
@@ -115,9 +129,12 @@ namespace IssuesBusinessLogic
         {
             List<Priority> allPriorities = new List<Priority>()
             {
-                Priority.Low,
-                Priority.Medium,
-                Priority.High
+                //foreach (enum in Priority)
+                Priority.P5,
+                Priority.P4,
+                Priority.P3,
+                Priority.P2,
+                Priority.P1,
             };
 
             return allPriorities;
@@ -131,9 +148,13 @@ namespace IssuesBusinessLogic
         {
             List<Status> allStatus = new List<Status>()
             {
-                Status.Open,
-                Status.InProgress,
-                Status.Closed,
+                Status.Unconfirmed,
+                Status.New,
+                Status.Assigned,
+                Status.Resolved,
+                Status.Verified,
+                Status.Reopen,
+                Status.Closed
             };
 
             return allStatus;
@@ -154,10 +175,23 @@ namespace IssuesBusinessLogic
                     allIssues.Remove(issue);//Remove Item from the list.
                     break;
                 }
+                
             }
 
+            if (updatedIssue.isIssueResolved == true || updatedIssue.IssueStatus == Status.Resolved) // from table
+            {
+                updatedIssue.IssueStatus = Status.Resolved;
+                updatedIssue.isIssueResolved = true;
+            }
+            else
+            {
+                //updatedIssue.IssueStatus = Status.Unconfirmed;
+                //updatedIssue.isIssueResolved = false;
+            }
+                
 
             allIssues.Add(updatedIssue);
+            SortIssues();
 
             //Log this information
             if (updatedIssue.IssueTitle.Length > 15)
@@ -188,6 +222,11 @@ namespace IssuesBusinessLogic
                     break;
             }
             return result;
+        }
+
+        public bool GetIsIssueResolved(IssueBase issue)
+        {
+            return issue.isIssueResolved;
         }
     }
 }

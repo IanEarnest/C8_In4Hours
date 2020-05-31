@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\EngineeringIssue.cs" />
+    <Compile Include="Entities\HardCodedIssues.cs" />
     <Compile Include="Entities\IssueBase.cs" />
     <Compile Include="Entities\OperationalIssue.cs" />
     <Compile Include="Entities\Priority.cs" />

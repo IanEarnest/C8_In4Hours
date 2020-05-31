@@ -10,6 +10,7 @@ namespace IssuesBusinessLogic
     public interface IssueBizContract
     {
 		List<IssueBase> GetAllIssues();
+		void SortIssues();
 		List<string> GetAllIssueTypes();
 		string GetIssueType(IssueBase issue);
 		List<Status> GetAllStatus();
@@ -17,6 +18,7 @@ namespace IssuesBusinessLogic
 		int AddIssue(IssueBase issue);
 		int UpdateIssue(IssueBase issue);
 		void ResolveIssue(IssueBase issue);
-		//CloseIssue?
+		void RemoveIssue(IssueBase issue);
+		bool GetIsIssueResolved(IssueBase issue);
 	}
 }

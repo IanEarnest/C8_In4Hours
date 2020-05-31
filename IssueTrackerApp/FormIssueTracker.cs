@@ -42,7 +42,7 @@ namespace IssueTrackerApp
             InitializeComponent();
             ////Initializing dependecies.
             _logHelper = new LogHelper();
-            _issueBiz = new IssuesBiz(_logHelper);
+            _issueBiz = new IssuesBiz(_logHelper); //new IssuesBiz(_logHelper, 20);
             _logHelper.LogUpdated += _logHelper_LogUpdated;
         }
 
@@ -75,36 +75,74 @@ namespace IssueTrackerApp
         {
             try
             {
+                // Create LoadIssueToEditor(row) method     IssueToSave (of type IssueBase)
+                // Create PopulateControls (issue) method   IssueToSave (of type IssueBase)
+                //LoadIssueToEditor calls PopulateControls (issue)
+                // IssueToSave = LoadIssueToEditor(row);
+                //                  PopulateControls
+
                 //MessageBox.Show(dgrdIssues.SelectedRows[0].Cells[0].Value.ToString());
+
+                // If a row is selected, load the issue on that row
                 if (dgrdIssues.SelectedRows.Count > 0)
                 {
-                    int selectedIssueID;
-                    int.TryParse(dgrdIssues.SelectedRows[0].Cells[0].Value.ToString(), out selectedIssueID);
-
-                    //---- Get the Actual Issue object from All Issue List.
-                    List<IssueBase> allIssues = _issueBiz.GetAllIssues();
-                    foreach (var issue in allIssues)
-                    {
-                        if (issue.IssueID == selectedIssueID)
-                        {
-                            issueToSave = issue;
-                            break;
-                        }
-                    }
-
-                    //IssueToSave is now pointing to IssueBase object to update.
-
-                    //Populating Controls 
-                    labelIssueID.Text = issueToSave.IssueID.ToString();
-                    //txtIssueID.Text = issueToSave.IssueID.ToString();
-                    txtIssueTitle.Text = issueToSave.IssueTitle;
-                    txtIssueDesc.Text = issueToSave.IssueDescription;
-                    cmbPriorityList.SelectedItem = issueToSave.IssuePriority;
-                    cmbStatus.SelectedItem = issueToSave.IssueStatus;
-                    cmbType.SelectedItem = _issueBiz.GetIssueType(issueToSave);
-                    cmbType.Enabled = false;
-                    btnResolve.Enabled = true;
+                    LoadIssueToEditor();
                 }
+            }
+            catch (Exception ex)
+            {
+                _logHelper.LogInfo($"Error Occured {ex}");
+            }
+        }
+
+        private void LoadIssueToEditor(int row)
+        {
+            try
+            {
+                // Fails when Show Resolved false, issue hides before it can be loaded
+                if (chkBoxShowResolved.Checked)
+                {
+                    dgrdIssues.ClearSelection();
+                    dgrdIssues[0, row].OwningRow.Selected = true;
+                    _logHelper.LogInfo($"Row: {row}");
+                    //LoadIssueToEditor();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logHelper.LogInfo($"Error Occured {ex}");
+            }
+        }
+        private void LoadIssueToEditor() // int row
+        {
+            try
+            {
+                int selectedIssueID;
+                int.TryParse(dgrdIssues.SelectedRows[0].Cells[0].Value.ToString(), out selectedIssueID);
+
+                //---- Get the Actual Issue object from All Issue List.
+                // Go through all issues to find the issue on the row
+                List<IssueBase> allIssues = _issueBiz.GetAllIssues();
+                foreach (var issue in allIssues)
+                {
+                    if (issue.IssueID == selectedIssueID)
+                    {
+                        issueToSave = issue;
+                        break;
+                    }
+                }
+
+                //IssueToSave is now pointing to IssueBase object to update.
+
+                //Populating Controls 
+                labelIssueID.Text = issueToSave.IssueID.ToString(); // labelIssueID was txtIssueID
+                txtIssueTitle.Text = issueToSave.IssueTitle;
+                txtIssueDesc.Text = issueToSave.IssueDescription;
+                cmbPriorityList.SelectedItem = issueToSave.IssuePriority;
+                cmbStatus.SelectedItem = issueToSave.IssueStatus;
+                cmbType.SelectedItem = _issueBiz.GetIssueType(issueToSave);
+                cmbType.Enabled = false;
+                btnResolve.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -119,6 +157,10 @@ namespace IssueTrackerApp
         /// <param name="e"></param>
         private void btnNew_Click(object sender, EventArgs e)
         {
+            // New method - ClearIssueEdittorFields()
+            // ClearIssueEdittorFields();
+            // ClearSelection();
+
             issueToSave = null;
             labelIssueID.Text = "";
             txtIssueTitle.Text = "";
@@ -129,11 +171,7 @@ namespace IssueTrackerApp
             dgrdIssues.ClearSelection();
             // No selected cells
             //dgrdIssues.CurrentCell = dgrdIssues[columnName, row.Index]; //.Selected = true;
-            //dgrdIssues.Rows[row.Index].Selected = true; 
-            //dgrdIssues.Update();
-            //dgrdIssues.Refresh();
-            //dgrdIssues.ClearSelection();
-            //dgrdIssues.Focus();
+            //.Update(); .Refresh(); .ClearSelection(); .Focus();
             cmbType.Enabled = true;
             btnResolve.Enabled = false;
         }
@@ -145,10 +183,18 @@ namespace IssueTrackerApp
         /// <param name="e"></param>
         private void btnSave_Click(object sender, EventArgs e)
         {
-            //if title or description empty, disable save
+            // Save, if...
+            // new method IssueTypeSelected();
+            // issueToSave = IssueTypeSelected();
+            // setIssueID()
+            // saveIssue() // new/ existing
+            // LoadIssues();
+
+            //if title or description empty, disable save, display message
             if(txtIssueTitle.Text == "" || txtIssueDesc.Text == "")
             {
-                _logHelper.LogInfo($"Title or Desc empty");
+                _logHelper.LogInfo($"Issue Title or Description empty");
+                MessageBox.Show("Issue Title and Issue Description are required", "Reminder");
                 return;
             }
             
@@ -180,18 +226,15 @@ namespace IssueTrackerApp
 
 
 
-            // IssueID - Set to label if issue loaded
-            // otherwise check for duplicate and set ID number
 
-            // Parse IssueID text into an integer
-            int issueID = 101;
-            //int.TryParse(txtIssueID.Text, out issueId);
-            
+            // IssueID - Set to label if issue loaded or set to above largest ID number
+            int issueID;
 
-            // do not update if already set
+            // do not update if already set (parse from Label)
             if (labelIssueID.Text == "")
             {
-                issueID = setIssueID(issueID);
+                issueID = setIssueID(); // set to highest ID + 1
+                labelIssueID.Text = issueID.ToString(); // Update table
             } 
             else {
                 int.TryParse(labelIssueID.Text, out issueID);
@@ -204,7 +247,6 @@ namespace IssueTrackerApp
 
             issueToSave.IssueTitle = txtIssueTitle.Text;
             issueToSave.IssueDescription = txtIssueDesc.Text;
-            issueToSave.IssueTitle = txtIssueTitle.Text;
 
             Priority issuePriority;
             Enum.TryParse(cmbPriorityList.SelectedItem.ToString(), out issuePriority);
@@ -213,6 +255,12 @@ namespace IssueTrackerApp
             Status issueStatus;
             Enum.TryParse(cmbStatus.SelectedItem.ToString(), out issueStatus);
             issueToSave.IssueStatus = issueStatus;
+
+            // check resolved changed when changing status
+            if (issueStatus != Status.Resolved)
+            {
+                issueToSave.isIssueResolved = false;
+            }
 
             if (newIssue)
             {
@@ -240,60 +288,45 @@ namespace IssueTrackerApp
             // then set that row as selected
 
             //dgrdIssues.Rows[0].Selected = false;
+
+            // Go through DataGridView instead of _issueBiz because order may be different
+            //_issueBiz.GetAllIssues
             string columnName = "IssueID";
             foreach (DataGridViewRow row in dgrdIssues.Rows)
             {
                 //row.Selected = false;
                 if (row.Cells[columnName].Value.ToString() == issueID.ToString())// row.Cells[columnIndex].Value != null && issueID == row.Cells[columnIndex].Value.ToString())
                 {
-                    System.Threading.Thread.Sleep(1000);
+                    Thread.Sleep(1000);
                     //dgrdIssues.SelectedRows[0].Cells[0].Value.ToString
-                    //dgrdIssues.Rows[columnIndex].Cells[0].Selected = true;// = row.Cells[columnIndex];
-                    //dgrdIssues.Rows[row.Index].Selected = true;
-                    //row.Selected = true;
 
                     // Select cell to move focus point - then
                     dgrdIssues.CurrentCell = dgrdIssues[columnName, row.Index]; //.Selected = true;
                     dgrdIssues.Rows[row.Index].Selected = true;
                     _logHelper.LogInfo($"issueID: {issueID} = Row: {row.Index}");
                 }
-
-                //for (int columnIndex = 0; columnIndex < dgrdIssues.Columns.Count; columnIndex++)
-                //{
-
-                    // I did not test this case, but cell.Value is an object, and objects can be null
-                    // So check if the cell is null before using .ToString()
-
-                    // check only IssueID column?
-                    /*if (row.Cells[columnIndex].Value.ToString() == issueID.ToString())// row.Cells[columnIndex].Value != null && issueID == row.Cells[columnIndex].Value.ToString())
-                    {
-                        //dgrdIssues.SelectedRows[0].Cells[0].Value.ToString
-
-                        // the searchText is equals to the text in this cell.
-                        //dgrdIssues.Rows[columnIndex].Cells[0].Selected = true;// = row.Cells[columnIndex];
-                        dgrdIssues.Rows[row.Index].Selected = true;
-                        row.Selected = true;
-                        //break;
-                        _logHelper.LogInfo($"issueID: {issueID} = Row: {row.Index}");
-                    }*/
-                    //_logHelper.LogInfo($"Not Row: {columnIndex}");
-                //}
-                //_logHelper.LogInfo($"Not Row: {row.Index}");
             }
+        }
+        public int startingID = 101;
+        private int setIssueID()
+        {
+            return setIssueID(0);
         }
         private int setIssueID(int issueID)
         {
             // Set issueID to Last ID + 1
-            //issueID = _issueBiz.GetAllIssues()[_issueBiz.GetAllIssues().Count - 1].IssueID + 1;
-
-
-            // Save IssueID as new number, not already used.
-            // Set to 101, if already exists, use last issue ID + 1, also check all issues for duplicates
-            // Go through all issues to find duplicate
-            issueID = 101; // default
+            issueID = _issueBiz.GetAllIssues()[_issueBiz.GetAllIssues().Count - 1].IssueID + 1;
+            return issueID;
+        }
+        // Unused method
+        private int setIssueIDNotDuplicate(int issueID)
+        {
+            // Set IssueID - Check for duplicates, set as unused number (e.g. 101..2..3..5 = 104)
+            issueID = startingID; // default
             List<IssueBase> allIssues = _issueBiz.GetAllIssues();
             int issuesCount = _issueBiz.GetAllIssues().Count();
 
+            // Go through all issues to find duplicate
             // If not duplicate, continue
             for (int pos = 1; pos <= issuesCount; pos++) //bool unique = true; while (pos < issuesCount)
             {
@@ -304,16 +337,9 @@ namespace IssueTrackerApp
                     pos = 1; // restart loop
                 }
             }
-
-
-            //Debug
-            int lastIDAnd1 = _issueBiz.GetAllIssues()[_issueBiz.GetAllIssues().Count - 1].IssueID + 1;
-            //_logHelper.LogInfo($"Count: {issuesCount}, ID: {issueID}, LastID+1: {lastIDAnd1}");
-            //MessageBox.Show($"Count: {issuesCount}, ID: {issueId}, myInt: {myInt}");
-
-            labelIssueID.Text = issueID.ToString(); // Update table
             return issueID;
         }
+
         private void btnLoad_Click(object sender, EventArgs e)
         {
             LoadIssues();
@@ -322,64 +348,126 @@ namespace IssueTrackerApp
         /// <summary>
         /// Private method, loads all issues and refresh the DataGridView.
         /// </summary>
+
+        // Create new public _issueBiz.GetAllIssues() and then restore it in the else
+        // binding means both sides changed?
         private void LoadIssues()
         {
+            // CheckCheckBox()
+            // setIssueList?
+
             BindingSource source = new BindingSource();
-            source.DataSource = _issueBiz.GetAllIssues(); //Get All Issues from Business Logic Class.
-            dgrdIssues.DataSource = source; //Binding DataGridView
-            dgrdIssues.ClearSelection();
+            // Seperate list for resolved issues
+            
+            // Order list
+            //List<IssueBase> SortedList = new List<IssueBase>();
+            //SortedList = SortedList.OrderBy(o => o.IssueID).ToList();
+            _issueBiz.SortIssues();
+            //SortedList = SortedList.OrderBy(o => o.IssueID).ToList();
+
+            // if showResolved = true   // show all // Colour resolved
+            if (chkBoxShowResolved.Checked)
+            {
+                // Show all (Assign DataGrid to issues)
+                //List<IssueBase> allIssuesAndResolved = _issueBiz.GetAllIssues();//new List<IssueBase>(_issueBiz.GetAllIssues());
+
+                source.DataSource = _issueBiz.GetAllIssues(); //Get All Issues from Business Logic Class.
+                dgrdIssues.DataSource = source; //Binding DataGridView
+                //dgrdIssues.ClearSelection();
+                //SortedList = _issueBiz.GetAllIssues();
+
+                //Colour resolved (yellow)
+                string columnName = "IssueStatus";
+                foreach (DataGridViewRow row in dgrdIssues.Rows)
+                {
+                    // If Status = Resolved
+                    if (row.Cells[columnName].Value.ToString() == Status.Resolved.ToString())// row.Cells[columnIndex].Value != null && issueID == row.Cells[columnIndex].Value.ToString())
+                    {
+                        //Thread.Sleep(1000);
+                        row.DefaultCellStyle.BackColor = Color.Yellow;
+                        //RowPrePaint 
+                        string myIssueID = dgrdIssues["IssueID", row.Index].Value.ToString();
+                        _logHelper.LogInfo($"Row: {row.Index}, Issue: {dgrdIssues["IssueID", row.Index].Value} made Yellow . {myIssueID}");
+                        
+                    }
+                    // Reset row colour? // what about add new issue as resolved?
+                }
+                
+                //source.DataSource = allIssuesAndResolved; //Get All Issues from Business Logic Class.
+                //dgrdIssues.DataSource = source; //Binding DataGridView
+                //dgrdIssues.ClearSelection();
+            }
+            else
+            {
+                // if showResolved = false // show only not resolved
+                // Need to assign to new list otherwise the main list gets changed aswell
+                List<IssueBase> allIssuesNotResolved = new List<IssueBase>(_issueBiz.GetAllIssues());//_issueBiz.GetAllIssues());
+                //allIssuesNotResolved = _issueBiz.GetAllIssues();
+
+                try
+                {
+                    //List<IssueBase> tmpList = allIssuesNotResolved;
+                    foreach (IssueBase issue in allIssuesNotResolved.ToList()) // .ToList stops Exception: Collection was modified; enumeration operation may not execute
+                    {//?
+                        if (issue.IssueStatus == Status.Resolved)
+                        {
+                            allIssuesNotResolved.Remove(issue); // Remove resolved issues from list
+                        }
+                    }
+                    //dgrdIssues.DataSource = new BindingSource(allIssuesNotResolved, "dgrdIssues");
+
+                    // Update here as changed an issue
+                    source.DataSource = allIssuesNotResolved;
+                    dgrdIssues.DataSource = source;
+                    dgrdIssues.ClearSelection();
+                }
+                catch (Exception ex)
+                {
+                    _logHelper.LogInfo($"Error Occured {ex}");
+                }
+                //source.DataSource = allIssuesNotResolved;
+                //SortedList = allIssuesNotResolved;
+                //dgrdIssues.DataSource = source;
+                //dgrdIssues.ClearSelection();
+            }
+            //_issueBiz.GetAllIssues()
+
+            // Sort both lists
+            
+            
+            //source.DataSource = SortedList;
+            //dgrdIssues.DataSource = source;
+            //dgrdIssues.ClearSelection();
+            //dgrdIssues.Sort(dgrdIssues.Columns["IssueID"], direction:ListSortDirection.Ascending);
         }
 
+        // Temp removes
         private void btnResolve_Click(object sender, EventArgs e)
         {
             //Important: Every Issue has a ResolveIssue method, but we cannot call it because it is marked as internal.
             //We have to access it thrugh the Business Logic Class.
 
             _issueBiz.ResolveIssue(issueToSave); //Calls the Resolve method on Business Logic Class.
+            LoadIssueToEditor();
+            LoadIssues();
         }
-
-
-
-
-
-
-
-        // Autofill
-        private void btnLog_Click(object sender, EventArgs e)
+        // Shows/ hides from datagrid
+        private void chkBoxShowResolved_CheckedChanged(object sender, EventArgs e)
         {
-            /*
-                issueToSave = null;
-                labelIssueID.Text = "";
-                txtIssueTitle.Text = "";
-                txtIssueDesc.Text = "";
-                cmbPriorityList.SelectedIndex = 0;
-                cmbStatus.SelectedIndex = 0;
-                cmbType.SelectedIndex = 0;
-                dgrdIssues.ClearSelection();
-                cmbType.Enabled = true;
-                btnResolve.Enabled = false;
-            */
-            btnNew_Click(sender, e);
-                //_logHelper.GetAllLogInfo();
-                //lstLogs.DataSource = _logHelper.GetAllLogInfo();
-                //List<string> MyList = new List<string>() { "Log message", "Hello2" };
-                //lstLogs.DataSource = null;
-                //lstLogs.DataSource = MyList;
-            string testString = "testString";
-            int testInt = 1;
-            //issueToSave = null;
-            //txtIssueID.Text             = testInt.ToString();
-            //labelIssueID.Text = "";
-            txtIssueTitle.Text          = testString;
-            txtIssueDesc.Text           = testString;
-            cmbPriorityList.SelectedIndex = testInt;
-            cmbStatus.SelectedIndex       = testInt;
-            cmbType.SelectedIndex         = testInt;
-            //dgrdIssues.ClearSelection();
-            //cmbType.Enabled = true;
-            //btnResolve.Enabled = false;
+            // if checked, database show resolved = true
+            _logHelper.LogInfo($"CheckBox: {chkBoxShowResolved.Checked}");
+            LoadIssues();
         }
-        private void button3_Click(object sender, EventArgs e)
+        // Deletes
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            _issueBiz.RemoveIssue(issueToSave);
+            LoadIssues();
+        }
+        
+        
+        // Start new form on top of current
+        private void btnNewForm_Click(object sender, EventArgs e)
         {
             // Exit current app to start new app?
             //this.Visible = false;
@@ -398,8 +486,76 @@ namespace IssueTrackerApp
             //this.Close();
         }
 
+        // Debug/ Tools
+
+        // Autofill
+        private void btnAutofill_Click(object sender, EventArgs e)
+        {
+            /*
+                issueToSave = null;
+                labelIssueID.Text = "";
+                txtIssueTitle.Text = "";
+                txtIssueDesc.Text = "";
+                cmbPriorityList.SelectedIndex = 0;
+                cmbStatus.SelectedIndex = 0;
+                cmbType.SelectedIndex = 0;
+                dgrdIssues.ClearSelection();
+                cmbType.Enabled = true;
+                btnResolve.Enabled = false;
+            */
+            btnNew_Click(sender, e);
+            //_logHelper.GetAllLogInfo();
+            //lstLogs.DataSource = _logHelper.GetAllLogInfo();
+            //List<string> MyList = new List<string>() { "Log message", "Hello2" };
+            //lstLogs.DataSource = null;
+            //lstLogs.DataSource = MyList;
+            string testString = "testString";
+            int testInt = 1;
+            //issueToSave = null;
+            //txtIssueID.Text             = testInt.ToString();
+            //labelIssueID.Text = "";
+            txtIssueTitle.Text = testString;
+            txtIssueDesc.Text = testString;
+            cmbPriorityList.SelectedIndex = testInt;
+            cmbStatus.SelectedIndex = testInt;
+            cmbType.SelectedIndex = testInt;
+            //dgrdIssues.ClearSelection();
+            //cmbType.Enabled = true;
+            //btnResolve.Enabled = false;
+        }
+
+        
+        delegate void AutoClickDel(object sender, EventArgs e);
+        private void btnNewIssue_Click(object sender, EventArgs e)
+        {
+            //load... and stuff
+            _logHelper.LogInfo($"AutoClick running...");
+
+
+            // Load, (New, AutoFill), 
+            //PrintDel print = new PrintDel(MyPrintMethod);
+            //AutoClickDel[] autoClickDel = { btnAutofill_Click, btnSave_Click};
+            //AutoClickDel [] autoClickDel = new AutoClickDel[]  { btnAutofill_Click, btnSave_Click};
+            AutoClickDel autoClickDel = btnLoad_Click;//, btnAutofill_Click, btnSave_Click;//{ btnAutofill_Click + btnSave_Click };
+                                                                                        //autoClickDel += btnAutofill_Click;
+                                                                                        //autoClickDel += btnSave_Click;
+            autoClickDel += btnAutofill_Click;
+            autoClickDel += btnSave_Click;
+            //autoClickDel.Invoke(sender, e);
+
+            Thread.Sleep(1000);
+            // Load
+            btnLoad_Click(sender, e);
+            // New, AutoFill 
+            btnAutofill_Click(sender, e);
+            btnSave_Click(sender, e);
+        }
+
+
+
 
         // Section 5 - Async button
+        // Normal button
         int result = 0;
         private void buttonWait_Click(object sender, EventArgs e)
         {
@@ -407,6 +563,7 @@ namespace IssueTrackerApp
             MessageBox.Show($"Result : {result}");
         }
 
+        // Async button
         private async void buttonWaitAsync_Click(object sender, EventArgs e)
         {
             // task int = int calculate
@@ -424,33 +581,214 @@ namespace IssueTrackerApp
             return total;
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        
-
+        bool isPressed = false;
+        //cell value change
         private void dgrdIssues_CellStateChanged(object sender, DataGridViewCellStateChangedEventArgs e)
         {
+            //_logHelper.LogInfo($"CellStateChanged");
+            try
+            {
+                //MessageBox.Show(dgrdIssues.SelectedRows[0].Cells[0].Value.ToString());
+                if (dgrdIssues.SelectedRows.Count > 0)
+                {
+                    // If check box ticked, set Resolved
 
+                    //string myColumn = "Resolved";
+
+                    //DataGridViewCell myCell = dgrdIssues[myColumn, 0];
+                    bool myBool = (bool)e.Cell.Value;
+                    _logHelper.LogInfo($"Pressed: {myBool}, {sender}");
+                    /*
+                    // Resolved column
+                    if (e.ColumnIndex == dgrdIssues.Columns[myColumn].Index)
+                    {
+                        _logHelper.LogInfo($"Pressed...column");
+
+
+                        // if checkbox is true, issue resolved is true
+                        // cell??
+                        if (myCell.Value.ToString() == "True")
+                        {
+                            _logHelper.LogInfo($"True...?");
+                            // issue resolved
+                            isPressed = true;
+                            ChangeIssue();
+                        }
+                        else if (myCell.Value.ToString() == "False")
+                        {
+                            _logHelper.LogInfo($"False...?");
+                            // issue resolved
+                            isPressed = false;
+                            ChangeIssue();
+                        }
+                    }*/
+                }
+            }
+            catch (Exception ex)
+            {
+                _logHelper.LogInfo($"Error Occured {ex}");
+            }
+        }
+        private void ChangeIssue(int row)
+        {
+            //if (dgrdIssues.SelectedRows.Count > 0)
+            
+            // Get ID
+            int selectedIssueID;
+            int.TryParse(dgrdIssues["IssueID", row].Value.ToString(), out selectedIssueID);
+            //int.TryParse(dgrdIssues.SelectedRows[0].Cells[0].Value.ToString(), out selectedIssueID);
+
+            //---- Get the Actual Issue object from All Issue List.
+            List<IssueBase> allIssues = new List<IssueBase>(_issueBiz.GetAllIssues());//_issueBiz.GetAllIssues();
+
+            // look for by ID
+            foreach (IssueBase issue in allIssues)
+            {
+                // find by ID
+                if (issue.IssueID == selectedIssueID)
+                {
+                    // Set issue Resolved, set status, update
+                    issue.isIssueResolved = isPressed;
+
+                    // If not resolved but status shows resolved, make status unconfirmed
+                    if (!isPressed && issue.IssueStatus == Status.Resolved)
+                    {
+                        issue.IssueStatus = Status.Unconfirmed;
+                    }
+                    // Update only one issue
+                    _issueBiz.UpdateIssue(issue);
+                    _logHelper.LogInfo($"Issue:");
+                }
+            }
+            
+
+            //Look for by row
+            /*
+            // set both resolved
+            allIssues[row].isIssueResolved = isPressed;
+            // check not resolved and status resolved before making unconfirmed
+            if(!isPressed && allIssues[row].IssueStatus == Status.Resolved)
+            {
+                allIssues[row].IssueStatus = Status.Unconfirmed;
+            }
+            // Update only one issue
+            _issueBiz.UpdateIssue(allIssues[row]);
+            // Not updated??
+
+            _logHelper.LogInfo($"Issue: {allIssues[row].IssueID}, Row: {row}, Pressed: {isPressed}, Status: {allIssues[row].IssueStatus}, Resolved: {allIssues[row].isIssueResolved}");
+            // or
+            */
+            /*
+            foreach (var issue in allIssues)
+            {
+                if (issue.IssueID == selectedIssueID)
+                {
+                    //issueToSave = issue;
+                    issue.isIssueResolved = isPressed;
+                    _issueBiz.UpdateIssue(issue);
+                    break;
+                }
+            }*/
+            //_logHelper.LogInfo($"U2 {row}");
+            //LoadIssues();
         }
 
-        
+        private void dgrdIssues_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //_logHelper.LogInfo($"CellContentClick");
+        }
+
+        private void dgrdIssues_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            //if(_logHelper != null)
+            //_logHelper.LogInfo($"CellValueChanged");
+        }
+        private void dgrdIssues_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            string myColumn = "Resolved";
+            string selectableColumn = "IssueID";
+            // On down click get value of box, on up click make the value opposite
+            // switch Up with Down, then 
+            if (e.ColumnIndex == dgrdIssues.Columns[myColumn].Index)
+            {
+                // Resolved bool change
+                dgrdIssues[myColumn, e.RowIndex].Value = !myValue;
+                isPressed = !myValue;
+                ChangeIssue(e.RowIndex);
+                LoadIssues(); // this moves column, changes selection NOT GOOD
+                LoadIssueToEditor(e.RowIndex);
+
+            }
+            // When a cell in IssueID column selected, make row selected
+            else if (e.ColumnIndex == dgrdIssues.Columns[selectableColumn].Index)
+            {
+                dgrdIssues[selectableColumn, e.RowIndex].OwningRow.Selected = true; // Only works in mouseup, doesn't select whole row in mousedown
+            }
+            //      Down (box is still empty but selected)
+            // get value of checkbox, store and when mouse up set bool opposite
+            // 
+            //      Up (checkbox is changed (potentially))
+            // Load table
+        }
+        bool myValue;
+        private void dgrdIssues_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            // Still allow rows to be selectable
+            //if (e.ColumnIndex > 0)
+            //{
+            
+            string myColumn = "Resolved";
+
+            // Resolved column
+            if (e.ColumnIndex == dgrdIssues.Columns[myColumn].Index)
+            {
+                //LoadIssues(); // Has to update on click? // cell up
+                // click anywhere to activate checkbox
+                myValue = (bool)dgrdIssues[myColumn, e.RowIndex].Value;//dgrdIssues[myColumn, e.RowIndex].Value;
+                var myInt = dgrdIssues["IssueID", e.RowIndex].Value;
+                _logHelper.LogInfo($"CellMouseDown: ID {myInt}, Val: {myValue}");
+
+
+                // if checkbox is true, issue resolved is true
+                // cell??
+                //if (myValue == true)//.ToString() == "True")
+                //{
+                //    _logHelper.LogInfo($"True...? {myInt}");
+                //    // issue resolved
+                //    isPressed = true;
+                //    //ChangeIssue(e.RowIndex);
+                //    //LoadIssues();
+                //}
+                //else if (myValue == false)//.ToString() == "False")
+                //{
+                //    _logHelper.LogInfo($"False...?");
+                //    // issue resolved
+                //    isPressed = false;
+                //    //ChangeIssue(e.RowIndex);
+                //    //LoadIssues();
+                //}
+                //_logHelper.LogInfo($"?...{myValue}, {myInt}");
+                //isPressed = myValue;
+                //ChangeIssue(e.RowIndex);
+                //LoadIssues();
+            }
+        }
+
+        private void ReLoadIssues_Click(object sender, EventArgs e)
+        {
+            //InitializeComponent();
+            //////Initializing dependecies.
+            //_logHelper = new LogHelper();
+            //_issueBiz = new IssuesBiz(_logHelper); //new IssuesBiz(_logHelper, 20);
+            //_logHelper.LogUpdated += _logHelper_LogUpdated;
+        }
+        //public FormIssueTracker()
+        //{
+        //    InitializeComponent();
+        //    ////Initializing dependecies.
+        //    _logHelper = new LogHelper();
+        //    _issueBiz = new IssuesBiz(_logHelper); //new IssuesBiz(_logHelper, 20);
+        //    _logHelper.LogUpdated += _logHelper_LogUpdated;
+        //}
     }
 }

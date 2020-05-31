@@ -61,8 +61,11 @@ namespace C8_In4Hours
             //2. Create Class Library Project - IssuesBusinessLogic
             //3. Create folder Entities
             // Create Classes:
-            //  Enum Status (Open, InProgress, Closed)
-            //  Enum Priority (Low, Medium, High)
+                    // pre 26/05/20:
+                    //  Enum Status  (Open, InProgress, Closed)
+                    //  Enum Priority (Low, Medium, High)
+            //  Enum Status  (Unconfirmed, New, Assigned, Resolved, Verified, Reopen, Closed)
+            //  Enum Priority (P1, P2, P3, P4, P5) (P1 highest)
             //  (IssueBase inherited by OperationalIssue/ ServiceIssue/ EngineeringIssue)
             //  (OperationalIssue... - override ResolveIssue())
             //  Abstract Class - IssueBase
@@ -130,26 +133,70 @@ namespace C8_In4Hours
             //          LogTime     DateTime    property
             //          string      ToString    ()          Override         return $"{Message} at {LogTime}";        
         }
+
         //   6.4 Events in Win Form Project
         public void Lesson6_4()
         {
             //tips -
             //DropdownStyle - dropdown property??
-
+            // Need to assign to new list otherwise the main list gets changed aswell
+            //List<IssueBase> allIssuesNotResolved = new List<IssueBase>(_issueBiz.GetAllIssues());
+            //allIssuesNotResolved = _issueBiz.GetAllIssues(); // this changes both
+            //Auto Indent		ctrl + K, ctrl + F 
 
             //Improvements - 
-            // Function: Restrict input (if description and title empty, disable save)
-            //              ID = auto
-            //              database - connect to database or save file for issues
-            //              delete/ archive issues - remove issues, have a toggle for archived, only hide them, not delete from list
-            //              useful log detail - ?
-            //              search - seach
-            //              table order by
-            //ISSUE - sometimes Saves wrong ID?
-
-            // Code: EngineeringIssue... Into 1 class (IssueClasses)
+            // 
+            // Function -
+            //          database - connect to database or save file for issues
+            //          search - search table
+            //          table order by
+            // Future - 
+            //          Add tests
+            //          Tidy (Resolved/ IssueResolved, DO I NEED TO CHECK RESOLVED WHEN ADDED? btnsave/ issuebiz, update on save, load)
+            //                  useful log detail - ? 
+            //                  Methods tidy/ seperate
+            //          EngineeringIssue... Into 1 class (IssueClasses)
             //	 	    Enums into 1 class (EnumClass)
-            //	        Add tests
+                // P list - 
+                //      Select Issue ID column or column 0, selects issue
+                //      Rename "AutoClick" to "New Issue(auto)"
+                //      Put "New form" button on top, top
+                //      "Empty Issue title/ description" message - Create pop up aswell
+                //      Delete - autofill - save, new issue should be new number
+            //              
+            // Done -   
+            //      Restrict input (if description and title empty, disable save, display popup)
+            //      ID = auto (highest number)
+            //      resolve/ archive issues - remove issues, have a toggle for archived, only hide them, not delete from list
+            //      remove/ delete issues - remove from database
+            //      Resolve, Delete, AutoClick, Reolved toggle and functionality
+            //      Datagrid changes
+
+
+            //Changes - 
+            //	    buttons tidied up
+            //	    Changed "Resolve" button functionality
+            //	    Added "Remove" button + functionality
+            //	    Added "AutoClick" button + functionality
+            //	    Added "Resolved" toggle + functionality
+            //	    RemoveIssue added (IssueBizContract/ IssueBiz)
+            //	    Priority Enum and Status Enum changed
+            //	    LoadIssues() changed
+            //	    Added HardCodedIssues class
+            //	    Datagrid readonly
+            //	    Datagrid checkbox/ quick resolve
+            //      Select issue using column 0 or Issue ID
+            //      Added popup - Save, "Issue Title or Description empty" message
+            //      Renamed "AutoClick" to "New Issue(auto)"
+            //      Put "New form" button on top, top
+            //      Bug fixing
+
+            //BUGS -	
+            //      (FIXED) Wrong ID - Load, Click Issue, Save, (new)Autofill, Save
+            //      (FIXED) Wrong ID - Load, Click Issue, Remove - Autofill - Save = ID sometimes not new
+            //      (FIXED) Resolved stuck - Load, Click Issue, Status(Resolved), Save, Status(New) = No change (When Status = Resolved, Cannot do: Status = something else (save))
+            //      show resolved fail - Load, Click quick resolve
+
             //	    Data is in memory list, use persistan storage/ file?
             //		IS.StreamWriter, searilaize, BinaryFormatter
             //		SQL Server Compact or lightweight database
@@ -158,6 +205,29 @@ namespace C8_In4Hours
             //      https://docs.microsoft.com/en-us/dotnet/api/system.xml.serialization.xmlserializer?redirectedfrom=MSDN&view=netcore-3.1
             //      Serialize
             //      https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-3.0/szzyf24s%28v%3dvs.85%29
+            //      Database
+            //      https://www.guru99.com/c-sharp-access-database.html
+            //      File https://www.guru99.com/c-sharp-file-operations.html
+
+            //File: Helps in performing various operations on a file. It helps in the creation and manipulation of files.
+            //StreamWriter: It is used for writing characters to a stream.
+            //StreamReader: It is used for reading characters from a stream.
+            //StringWriter: It is used for writing a string to buffer.
+            //StringReader: It is used for reading a string from a buffer.
+            //Path: This can be used when a user wants to perform operations related to path.
+            //using (StreamReader sr = new StreamReader(“C:\ReadMe.txt”)
+            //{
+            //    //—————-code to read——————-//
+            //}
+            //using (StreamWriter sw = new StreamWriter(“C:\ReadMe.txt”))
+            //{
+            //    //————-code to write——————-//
+            //}
+
+            //string str = "test"; 
+            //Console.WriteLine(str?.Length); // in line null check
+
+
         }
     }
 }

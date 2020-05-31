@@ -19,7 +19,7 @@ namespace C8_In4Hours
         // Question - why use abstract instead of inheriting (hides class?)
         // Question - GAC for .NET Core?
         // Question - mutable vs immutable (change state and don't change state)
-                                //(encapsulation - change of variables)
+        //(encapsulation - change of variables)
 
         // Tips - use $: Console.WriteLine($"Name: {name}, Age: {age}");
         // C# use "ref" keyword for direct reference to variable instead of copies
@@ -32,6 +32,21 @@ namespace C8_In4Hours
         // Build/ Compile, CLR(JIT), MSIL, Machine Language
         // AFTER = Old projects, basic examples to put on portfolio
         // Make all Sections examples fit the same case (e.g. BugFixer (bugname, description etc))
+
+        /// Section 4 = https://raygun.com/blog/oop-concepts-java/
+        /// create concept: ice cream machine - donut(with/ without holes)
+        ///                 Series/ films/ netflix
+        ///                 Operating system
+        ///                 Email, Messaging, Trello/ Basecamp, Evernote
+        ///                 Browser (file checker/ Google Drive/ explorer.exe)
+        ///                 Internet (firefox)
+        ///                 MSPaint, Excel, Solitaire
+        ///                 Wordpress
+        ///                 Accounting - quickbooks
+        ///                 Payment - paypal
+        ///                 Social - TweetDeck, Buffer, Hootsuite
+        ///                 Medical industry?
+
 
         static void Main(string[] args)
         {

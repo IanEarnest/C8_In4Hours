@@ -6,7 +6,6 @@ using System.Text;
 namespace C8_In4Hours
 {
     /// <summary>
-    /// Section 4 = 
     /// Section 4. OOP 1
     ///       Object-Oriented Programming in C#
     ///   4.1 Encapsulation, classes, objects, data members, properties

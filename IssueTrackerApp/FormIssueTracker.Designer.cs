@@ -37,6 +37,9 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.labelIssueID = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
             this.cmbPriorityList = new System.Windows.Forms.ComboBox();
             this.btnResolve = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
@@ -53,11 +56,13 @@
             this.IssueDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IssuePriority = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IssueStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Resolved = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.label7 = new System.Windows.Forms.Label();
             this.btnLoad = new System.Windows.Forms.Button();
             this.btnLog = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.labelIssueID = new System.Windows.Forms.Label();
+            this.chkBoxShowResolved = new System.Windows.Forms.CheckBox();
+            this.btnAutoClick = new System.Windows.Forms.Button();
+            this.ReLoadIssues = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgrdIssues)).BeginInit();
@@ -141,6 +146,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnDelete);
             this.groupBox1.Controls.Add(this.labelIssueID);
             this.groupBox1.Controls.Add(this.cmbPriorityList);
             this.groupBox1.Controls.Add(this.btnResolve);
@@ -162,6 +168,34 @@
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Add/ Edit Issue";
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(515, 253);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnDelete.TabIndex = 17;
+            this.btnDelete.Text = "Remove";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnRemove_Click);
+            // 
+            // labelIssueID
+            // 
+            this.labelIssueID.AutoSize = true;
+            this.labelIssueID.Location = new System.Drawing.Point(184, 24);
+            this.labelIssueID.Name = "labelIssueID";
+            this.labelIssueID.Size = new System.Drawing.Size(0, 17);
+            this.labelIssueID.TabIndex = 16;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(626, 12);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(97, 26);
+            this.button3.TabIndex = 13;
+            this.button3.Text = "New form";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.btnNewForm_Click);
             // 
             // cmbPriorityList
             // 
@@ -216,7 +250,6 @@
             this.cmbStatus.Name = "cmbStatus";
             this.cmbStatus.Size = new System.Drawing.Size(121, 24);
             this.cmbStatus.TabIndex = 10;
-            this.cmbStatus.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // txtIssueDesc
             // 
@@ -225,7 +258,6 @@
             this.txtIssueDesc.Name = "txtIssueDesc";
             this.txtIssueDesc.Size = new System.Drawing.Size(366, 74);
             this.txtIssueDesc.TabIndex = 9;
-            this.txtIssueDesc.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // txtIssueTitle
             // 
@@ -261,15 +293,19 @@
             this.IssueTitle,
             this.IssueDescription,
             this.IssuePriority,
-            this.IssueStatus});
+            this.IssueStatus,
+            this.Resolved});
             this.dgrdIssues.Location = new System.Drawing.Point(12, 353);
             this.dgrdIssues.Name = "dgrdIssues";
             this.dgrdIssues.RowHeadersWidth = 51;
             this.dgrdIssues.RowTemplate.Height = 24;
             this.dgrdIssues.Size = new System.Drawing.Size(1106, 354);
             this.dgrdIssues.TabIndex = 0;
-            this.dgrdIssues.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dgrdIssues.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgrdIssues_CellContentClick);
+            this.dgrdIssues.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgrdIssues_CellMouseDown);
+            this.dgrdIssues.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgrdIssues_CellMouseUp);
             this.dgrdIssues.CellStateChanged += new System.Windows.Forms.DataGridViewCellStateChangedEventHandler(this.dgrdIssues_CellStateChanged);
+            this.dgrdIssues.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgrdIssues_CellValueChanged);
             this.dgrdIssues.SelectionChanged += new System.EventHandler(this.dgrdIssues_SelectionChanged);
             // 
             // IssueID
@@ -278,6 +314,7 @@
             this.IssueID.HeaderText = "Issue ID";
             this.IssueID.MinimumWidth = 6;
             this.IssueID.Name = "IssueID";
+            this.IssueID.ReadOnly = true;
             this.IssueID.Width = 125;
             // 
             // IssueTitle
@@ -286,6 +323,7 @@
             this.IssueTitle.HeaderText = "Title";
             this.IssueTitle.MinimumWidth = 6;
             this.IssueTitle.Name = "IssueTitle";
+            this.IssueTitle.ReadOnly = true;
             this.IssueTitle.Width = 125;
             // 
             // IssueDescription
@@ -294,6 +332,7 @@
             this.IssueDescription.HeaderText = "Description";
             this.IssueDescription.MinimumWidth = 6;
             this.IssueDescription.Name = "IssueDescription";
+            this.IssueDescription.ReadOnly = true;
             this.IssueDescription.Width = 125;
             // 
             // IssuePriority
@@ -302,6 +341,7 @@
             this.IssuePriority.HeaderText = "Priority";
             this.IssuePriority.MinimumWidth = 6;
             this.IssuePriority.Name = "IssuePriority";
+            this.IssuePriority.ReadOnly = true;
             this.IssuePriority.Width = 125;
             // 
             // IssueStatus
@@ -310,7 +350,16 @@
             this.IssueStatus.HeaderText = "Status";
             this.IssueStatus.MinimumWidth = 6;
             this.IssueStatus.Name = "IssueStatus";
+            this.IssueStatus.ReadOnly = true;
             this.IssueStatus.Width = 125;
+            // 
+            // Resolved
+            // 
+            this.Resolved.DataPropertyName = "isIssueResolved";
+            this.Resolved.HeaderText = "Resolved";
+            this.Resolved.MinimumWidth = 6;
+            this.Resolved.Name = "Resolved";
+            this.Resolved.Width = 125;
             // 
             // label7
             // 
@@ -339,32 +388,48 @@
             this.btnLog.TabIndex = 12;
             this.btnLog.Text = "Autofill";
             this.btnLog.UseVisualStyleBackColor = true;
-            this.btnLog.Click += new System.EventHandler(this.btnLog_Click);
+            this.btnLog.Click += new System.EventHandler(this.btnAutofill_Click);
             // 
-            // button3
+            // chkBoxShowResolved
             // 
-            this.button3.Location = new System.Drawing.Point(362, 12);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(97, 26);
-            this.button3.TabIndex = 13;
-            this.button3.Text = "New form";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.chkBoxShowResolved.AutoSize = true;
+            this.chkBoxShowResolved.Location = new System.Drawing.Point(910, 332);
+            this.chkBoxShowResolved.Name = "chkBoxShowResolved";
+            this.chkBoxShowResolved.Size = new System.Drawing.Size(127, 21);
+            this.chkBoxShowResolved.TabIndex = 14;
+            this.chkBoxShowResolved.Text = "Show Resolved";
+            this.chkBoxShowResolved.UseVisualStyleBackColor = true;
+            this.chkBoxShowResolved.CheckedChanged += new System.EventHandler(this.chkBoxShowResolved_CheckedChanged);
             // 
-            // labelIssueID
+            // btnAutoClick
             // 
-            this.labelIssueID.AutoSize = true;
-            this.labelIssueID.Location = new System.Drawing.Point(184, 24);
-            this.labelIssueID.Name = "labelIssueID";
-            this.labelIssueID.Size = new System.Drawing.Size(0, 17);
-            this.labelIssueID.TabIndex = 16;
+            this.btnAutoClick.Location = new System.Drawing.Point(326, 12);
+            this.btnAutoClick.Name = "btnAutoClick";
+            this.btnAutoClick.Size = new System.Drawing.Size(136, 26);
+            this.btnAutoClick.TabIndex = 15;
+            this.btnAutoClick.Text = "New Issue (Auto)";
+            this.btnAutoClick.UseVisualStyleBackColor = true;
+            this.btnAutoClick.Click += new System.EventHandler(this.btnNewIssue_Click);
+            // 
+            // ReLoadIssues
+            // 
+            this.ReLoadIssues.Location = new System.Drawing.Point(468, 12);
+            this.ReLoadIssues.Name = "ReLoadIssues";
+            this.ReLoadIssues.Size = new System.Drawing.Size(152, 26);
+            this.ReLoadIssues.TabIndex = 16;
+            this.ReLoadIssues.Text = "ReLoadIssues";
+            this.ReLoadIssues.UseVisualStyleBackColor = true;
+            this.ReLoadIssues.Click += new System.EventHandler(this.ReLoadIssues_Click);
             // 
             // FormIssueTracker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1130, 719);
+            this.Controls.Add(this.ReLoadIssues);
+            this.Controls.Add(this.btnAutoClick);
             this.Controls.Add(this.button3);
+            this.Controls.Add(this.chkBoxShowResolved);
             this.Controls.Add(this.btnLog);
             this.Controls.Add(this.btnLoad);
             this.Controls.Add(this.label7);
@@ -409,14 +474,19 @@
         private System.Windows.Forms.DataGridView dgrdIssues;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btnLoad;
+        private System.Windows.Forms.Button btnLog;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label labelIssueID;
+        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.CheckBox chkBoxShowResolved;
+        private System.Windows.Forms.Button btnAutoClick;
         private System.Windows.Forms.DataGridViewTextBoxColumn IssueID;
         private System.Windows.Forms.DataGridViewTextBoxColumn IssueTitle;
         private System.Windows.Forms.DataGridViewTextBoxColumn IssueDescription;
         private System.Windows.Forms.DataGridViewTextBoxColumn IssuePriority;
         private System.Windows.Forms.DataGridViewTextBoxColumn IssueStatus;
-        private System.Windows.Forms.Button btnLog;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Label labelIssueID;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Resolved;
+        private System.Windows.Forms.Button ReLoadIssues;
     }
 }
 
