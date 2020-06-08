@@ -9,6 +9,53 @@ namespace Tutorial
         /* Reminders/ Useful
          
            Programming day = 3h code, 2h comms/plans, 1h learning
+
+        // Question - Struct? vs enum?
+        // Question - uses of string.empty
+        // Question - valid uses of stringbuilder
+        // Question - "Interpolation"
+        // Question - useful encapsulation?
+        // Question - why use abstract instead of inheriting (hides class?)
+        // Question - GAC for .NET Core?
+        // Question - mutable vs immutable (change state and don't change state)
+        //(encapsulation - change of variables)
+
+
+       // Make all Sections examples fit the same case (e.g. BugFixer (bugname, description etc))
+        // Ideas - sorting Arrays (myArray.Sort(myArray, highestFirst))
+            // Email client - class (send email, inbox, mail has address, from, header, body)
+            // Trip planner - store Hotel reservations tickets, weblinks, important phone numbers, addresses of places to visit and restaurants
+            // GAC - create key, install, uninstall from an interface
+            // ?Build/ Compile, CLR(JIT), MSIL, Machine Language
+            // AFTER = Old projects, basic examples to put on portfolio
+
+        /// Section 4 = https://raygun.com/blog/oop-concepts-java/
+        /// create concept: ice cream machine - donut(with/ without holes)
+        ///                 Series/ films/ netflix
+        ///                 Operating system
+        ///                 Email, Messaging, Trello/ Basecamp, Evernote
+        ///                 Browser (file checker/ Google Drive/ explorer.exe)
+        ///                 Internet (firefox)
+        ///                 MSPaint, Excel, Solitaire
+        ///                 Wordpress
+        ///                 Accounting - quickbooks
+        ///                 Payment - paypal
+        ///                 Social - TweetDeck, Buffer, Hootsuite
+        ///                 Medical industry?
+
+            // create app to do this?
+            // GAC = create key, install and uninstall (using CMD Admin)
+            //     sn -k 
+            //     gacutil -i "C:\Users\ianea\source\repos\C8_In4Hours\C8_In4Hours\bin\Debug\netcoreapp3.1\IHSLibs2.dll"
+            //     gacutil -u IHSLibs2
+            //     /l   - lists all assemblies
+            //     /ldl - downloaded files cache
+            //     /lr - assemblies and references
+            //C:\Windows\Microsoft.NET\assembly\GAC_MSIL\
+            // WindowsKey + E (Explorer)    %windir%\assembly
+            // 
+            // Problem - unable to use GAC assembly (copy local false = cannot find assembly)
+            //
          */
 
         /* Learning C# full list
@@ -41,7 +88,9 @@ namespace Tutorial
            And then
            Webforms (or Razor pages)
            MVC
-           SQL Server
+           WPF + MVVM?
+           MDI forms in WPF?
+           SQL Server (Express?)
            Web Services
            WCF
            Web API

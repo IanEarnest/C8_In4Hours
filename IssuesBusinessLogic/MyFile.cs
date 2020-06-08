@@ -26,7 +26,7 @@ namespace IssuesBusinessLogic
         //public string fileLocation = $"../";      // = Tutorial\bin\Debug\test.txt
         //public string fileLocation = $"../../";   // = Tutorial\bin\test.txt
         //public string fileLocation = $"../../../";// = Tutorial\test.txt
-
+        //if(File.Exist("./test.txt))
 
         static MyFile()
         {

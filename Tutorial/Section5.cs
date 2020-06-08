@@ -24,19 +24,19 @@ namespace C8_In4Hours
     class Section5
     {
         /* Notes
-            // create app to do this?
-            // GAC = create key, install and uninstall (using CMD Admin)
-            //     sn -k 
-            //     gacutil -i "C:\Users\ianea\source\repos\C8_In4Hours\C8_In4Hours\bin\Debug\netcoreapp3.1\IHSLibs2.dll"
-            //     gacutil -u IHSLibs2
-            //     /l   - lists all assemblies
-            //     /ldl - downloaded files cache
-            //     /lr - assemblies and references
-            //C:\Windows\Microsoft.NET\assembly\GAC_MSIL\
-            // WindowsKey + E (Explorer)    %windir%\assembly
-            // 
-            // Problem - unable to use GAC assembly (copy local false = cannot find assembly)
-            //
+        // create app to do this?
+        // GAC = create key, install and uninstall (using CMD Admin)
+        //     sn -k 
+        //     gacutil -i "C:\Users\ianea\source\repos\C8_In4Hours\C8_In4Hours\bin\Debug\netcoreapp3.1\IHSLibs2.dll"
+        //     gacutil -u IHSLibs2
+        //     /l   - lists all assemblies
+        //     /ldl - downloaded files cache
+        //     /lr - assemblies and references
+        //C:\Windows\Microsoft.NET\assembly\GAC_MSIL\
+        // WindowsKey + E (Explorer)    %windir%\assembly
+        // 
+        // Problem - unable to use GAC assembly (copy local false = cannot find assembly)
+        
         // Value Type, Reference Type
         // Value        = Simple (Int, String, Bool), Enum, Struct, Nullable
         // Reference    = Class, Interface, Array, Delegate
@@ -148,16 +148,16 @@ namespace C8_In4Hours
             string file = location + name; // @"C:\Windows\Microsoft.NET\assembly\GAC_MSIL\AssemblyTestLibrary.dll"
 
             Console.WriteLine($"\tLooking for: {file}");
-            
+
             try
             {
                 // System.Reflection
                 AssemblyName testAssembly;
 
                 testAssembly = AssemblyName.GetAssemblyName(file);
-                
+
                 Console.WriteLine($"\tYes, the file is an assembly : {testAssembly.FullName}");
-                
+
                 //Assembly myDll = Assembly.Load("AssemblyTestLibrary"); //AssemblyTestLibrary cannot find??
                 //Console.WriteLine($"\t{myDll.FullName}");
             }
@@ -235,7 +235,7 @@ namespace C8_In4Hours
             Console.WriteLine($"Dynamic: '{nameof(dynC)}', Value: {dynC}, Type: {dynC.GetType()}");
         }
 
-        
+
         // Delegates and Multicast Delegates, pass method as param
         // defines method signature, looks for methods with the same return and paramaters
         public void Lesson5_3()
@@ -332,11 +332,11 @@ namespace C8_In4Hours
             //"PrintShortDel(PrintDel) called"
             //          "Print: Callback 1""
             i++;
-            PrintShortDel(delegate (string message) 
+            PrintShortDel(delegate (string message)
             {
                 Console.WriteLine($"\tPrint: {message} {i}");
             });
-            
+
 
 
             //Lambda
@@ -401,7 +401,7 @@ namespace C8_In4Hours
                 greeting = "Good Morning";
             else
                 greeting = "Good Afternoon";
-            
+
             return greeting;
         }
         public string Greeting() => new StringBuilder()
@@ -413,7 +413,7 @@ namespace C8_In4Hours
 
         //public StringBuilder AppendWhen(this StringBuilder sb, string value, bool predicate) 
         //    => predicate ? sb.Append(value) : sb;
-        
+
         // Generics and Events, Gen vs Array, lists and methods acting on other methods actions
         public void Lesson5_5()
         {
@@ -462,20 +462,20 @@ namespace C8_In4Hours
             Section5_CustomerBiz objCustomerBiz = new Section5_CustomerBiz();
             objCustomerBiz.CustomerAdded += objCustomerBiz_CustomerAdded;
 
-            Section5_Customer newCustomer = new Section5_Customer() 
+            Section5_Customer newCustomer = new Section5_Customer()
             {
                 CustomerID = 12,
                 CustomerName = "Steve"
             };
-            
+
             // Add customer contains wait method
             objCustomerBiz.AddCustomer(newCustomer);
-            objCustomerBiz.AddCustomer((new Section5_Customer {CustomerID=22, CustomerName="John" }));
+            objCustomerBiz.AddCustomer((new Section5_Customer { CustomerID = 22, CustomerName = "John" }));
         }
 
         //class Section5_CustomerEventArg
-           //public string StoreName { get; set; }
-           // public string CustomerName { get; set; }
+        //public string StoreName { get; set; }
+        // public string CustomerName { get; set; }
         static void objCustomerBiz_CustomerAdded(object sender, Section5_CustomerEventArg e)
         {
             Console.WriteLine($"Customer: {e.CustomerName} added to store {e.StoreName}");

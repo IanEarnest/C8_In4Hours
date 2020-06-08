@@ -145,24 +145,17 @@ namespace C8_In4Hours
             //Auto Indent		ctrl + K, ctrl + F 
 
             //Improvements - 
-            // 
-            // Function -
-            //          database - connect to database or save file for issues
+            //
+            // Future - 
+            //          database - connect to database
             //          search - search table
             //          table order by
-            // Future - 
             //          Add tests
             //          Tidy (Resolved/ IssueResolved, DO I NEED TO CHECK RESOLVED WHEN ADDED? btnsave/ issuebiz, update on save, load)
             //                  useful log detail - ? 
             //                  Methods tidy/ seperate
             //          EngineeringIssue... Into 1 class (IssueClasses)
             //	 	    Enums into 1 class (EnumClass)
-                // P list - 
-                //      Select Issue ID column or column 0, selects issue
-                //      Rename "AutoClick" to "New Issue(auto)"
-                //      Put "New form" button on top, top
-                //      "Empty Issue title/ description" message - Create pop up aswell
-                //      Delete - autofill - save, new issue should be new number
             //              
             // Done -   
             //      Restrict input (if description and title empty, disable save, display popup)
@@ -171,33 +164,18 @@ namespace C8_In4Hours
             //      remove/ delete issues - remove from database
             //      Resolve, Delete, AutoClick, Reolved toggle and functionality
             //      Datagrid changes
-
-
-            //Changes - 
-            //	    buttons tidied up
-            //	    Changed "Resolve" button functionality
-            //	    Added "Remove" button + functionality
-            //	    Added "AutoClick" button + functionality
-            //	    Added "Resolved" toggle + functionality
-            //	    RemoveIssue added (IssueBizContract/ IssueBiz)
-            //	    Priority Enum and Status Enum changed
-            //	    LoadIssues() changed
-            //	    Added HardCodedIssues class
-            //	    Datagrid readonly
-            //	    Datagrid checkbox/ quick resolve
-            //      Select issue using column 0 or Issue ID
-            //      Added popup - Save, "Issue Title or Description empty" message
-            //      Renamed "AutoClick" to "New Issue(auto)"
-            //      Put "New form" button on top, top
-            //      Bug fixing
+            //      Save file for issues
+            //
+            // Recent Changes - 
+            //      Save file for issues
 
             //BUGS -	
             //      (FIXED) Wrong ID - Load, Click Issue, Save, (new)Autofill, Save
             //      (FIXED) Wrong ID - Load, Click Issue, Remove - Autofill - Save = ID sometimes not new
             //      (FIXED) Resolved stuck - Load, Click Issue, Status(Resolved), Save, Status(New) = No change (When Status = Resolved, Cannot do: Status = something else (save))
-            //      show resolved fail - Load, Click quick resolve
+            //      (FIXED) show resolved fail - Load, Click quick resolve
 
-            //	    Data is in memory list, use persistan storage/ file?
+            //	    Data is in memory list, use persistan storage/ file
             //		IS.StreamWriter, searilaize, BinaryFormatter
             //		SQL Server Compact or lightweight database
             //      https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-3.0/182eeyhh(v=vs.85)?redirectedfrom=MSDN
