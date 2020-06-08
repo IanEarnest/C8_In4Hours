@@ -5,7 +5,6 @@ using System.Text;
 namespace C8_In4Hours
 {
     /// <summary>
-    /// Section 3 = Methods
     /// Section 3. Basics 3
 	///       Methods, Enum and Exceptions
     ///   3.1 Enum, parse string
@@ -37,6 +36,10 @@ namespace C8_In4Hours
         Optional params
         MyMethod(int i, int b = 0); // b doesn't have to be defined
         MyMethod(myInt: 12, myString: "2002"); // can name variables in any order
+
+        // Use nameof to print name of Method (e.g. when error happens)
+        Console.WriteLine($"{nameof(S5.PrintHello)}");
+        Console.WriteLine($"{nameof(MyEnum.OptionOne)}"); // use to get String of Enum instead of value
          */
 
         /// <summary> Prints "Hello World!"

@@ -28,8 +28,8 @@ namespace IssuesBusinessLogic
             _objLogHelper = logHelper;
             //Initial Data
             //3 hardcoded issues
-            allIssues = new HardCodedIssues().Examples();
-            
+            //allIssues = new HardCodedIssues().Examples();
+            Load();
             //MyFile.Save("Hello world");
             //string MyString = MyFile.Load();
         }
@@ -61,10 +61,20 @@ namespace IssuesBusinessLogic
             else
                 _objLogHelper.LogInfo($"{issue.IssueTitle} ... Added.");
 
-
+            Save();
             return issue.IssueID;
         }
 
+        // Save in ResolveIssue, RemoveIssue, AddIssue, SortIssues, UpdateIssue, 
+        // Load in GetAllIssues, 
+        public void Load()
+        {
+            allIssues = new List<IssueBase>(MyFile.Load());
+        }
+        public void Save()
+        {
+            MyFile.Save(allIssues);
+        }
         public void LoadBackup()
         {
             allIssues = new List<IssueBase>(MyFile.LoadBackup());
@@ -84,6 +94,7 @@ namespace IssuesBusinessLogic
             issue.IssueStatus = Status.Resolved; // can put in each "ServiceIssue"...
             string message = issue.ResolveIssue();
             _objLogHelper.LogInfo(message);
+            Save();
         }
         /// <summary>
         /// Remove issue - 
@@ -94,6 +105,7 @@ namespace IssuesBusinessLogic
             allIssues.Remove(issue);
             string message = $"{issue.IssueID} - has been removed from the database.";//issue.RemoveIssue();
             _objLogHelper.LogInfo(message);
+            Save();
         }
 
         /// <summary>
@@ -102,6 +114,7 @@ namespace IssuesBusinessLogic
         /// <returns></returns>
         public List<IssueBase> GetAllIssues()
         {
+            Load();
             return allIssues;
         }
 
@@ -116,6 +129,7 @@ namespace IssuesBusinessLogic
             {
                 _objLogHelper.LogInfo($"Sort failed");
             }
+            Save();
         }
 
         /// <summary>
@@ -212,6 +226,7 @@ namespace IssuesBusinessLogic
             else
                 _objLogHelper.LogInfo($"{updatedIssue.IssueTitle} ... updated.");
 
+            Save();
             return updatedIssue.IssueID;
         }
 

@@ -10,6 +10,8 @@ namespace C8_In4Hours
     class Section2
     {
         /* Notes
+        mongolian vowel separator - counts as a space between letters sometimes in strings
+
         String.Empty
         "/n" = new line
         myString.IndexOf("lost")); // .IndexOf (-1 = not there)
@@ -193,6 +195,11 @@ namespace C8_In4Hours
             {
                 case "YES":
                     Console.WriteLine("Yes");
+                    break;
+                case "No":
+                    {
+                        Console.WriteLine("Yes");
+                    }
                     break;
                 default:
                     break;

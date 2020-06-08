@@ -52,6 +52,8 @@ namespace IssueTrackerApp
             cmbStatus.DataSource = _issueBiz.GetAllStatus(); //Binding Status Combo Box
             cmbType.DataSource = _issueBiz.GetAllIssueTypes(); //Binding Issue Types Combo Box
             btnResolve.Enabled = false; //Disabling Resolve Button
+            LoadIssues();
+            _logHelper.LogInfo($"Issues Loaded from file");
         }
 
 

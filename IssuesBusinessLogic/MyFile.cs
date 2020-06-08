@@ -21,6 +21,12 @@ namespace IssuesBusinessLogic
         static string filePathBackup = Directory.GetCurrentDirectory();
         static string filePathFull;
         static string filePathBackupFull;
+        //public string fileLocation = @"C:\Users\ianea\source\repos\C8_In4Hours\Tutorial\test.txt";
+        //public string fileLocation = $"./";       // = Tutorial\bin\Debug\netcoreapp3.1\test.txt
+        //public string fileLocation = $"../";      // = Tutorial\bin\Debug\test.txt
+        //public string fileLocation = $"../../";   // = Tutorial\bin\test.txt
+        //public string fileLocation = $"../../../";// = Tutorial\test.txt
+
 
         static MyFile()
         {
@@ -73,23 +79,106 @@ namespace IssuesBusinessLogic
         //	WriteToFile (line)
         //	Update and UpdateChanges (only update changes)
         // Save issues (as xml?)
-        public static void Save(String data) // IssueBase
+        //public static void Save(String data) // IssueBase
+        //{
+        //    StreamWriter myFile = new StreamWriter(filePath);
+        //    myFile.WriteLine(data);
+        //    myFile.Close();
+        //    myFile.Dispose();
+        //}
+        //	ReadFromFile 
+        //public static string Load() // IssueBase?
+        //{
+        //    StreamReader myFile = new StreamReader(filePath);
+        //    string data = myFile.ReadLine();
+        //    myFile.Close();
+        //    myFile.Dispose();
+        //    Debug.WriteLine($"Load DATA: {data}");
+        //    return data;
+        //}
+        public static void Save(List<IssueBase> allIssues) // IssueBase
         {
-            StreamWriter myFile = new StreamWriter(filePath);
-            myFile.WriteLine(data);
-            myFile.Close();
-            myFile.Dispose();
+            SetPath();
+            Debug.WriteLine("Save");
+
+            List<String> allIssuesSAVE = new List<string>();
+
+            // use seperators "," or XML
+            foreach (IssueBase issue in allIssues)
+            {
+                allIssuesSAVE.Add(  $"{issueProp[0]}: {issue.IssueID} \t" +
+                                    $"{issueProp[1]}: {issue.IssueTitle} \t" +
+                                    $"{issueProp[2]}: {issue.IssueDescription} \t" +
+                                    $"{issueProp[3]}: {issue.IssuePriority} \t" +
+                                    $"{issueProp[4]}: {issue.IssueStatus} \t" +
+                                    $"{issueProp[5]}: {issue.isIssueResolved} \t");
+            }
+
+            File.WriteAllLines(filePathFull, allIssuesSAVE);
         }
         //	ReadFromFile 
-        public static string Load() // IssueBase?
+        public static List<IssueBase> Load()
         {
-            StreamReader myFile = new StreamReader(filePath);
-            string data = myFile.ReadLine();
-            myFile.Close();
-            myFile.Dispose();
-            Debug.WriteLine($"Load DATA: {data}");
-            return data;
+            SetPath();
+            Debug.WriteLine("Load");
+            List<IssueBase> allIssues = new List<IssueBase>();
+
+            string[] myArray = File.ReadAllLines(filePathFull);
+            foreach (var line in myArray)
+            {
+                int startAdd = 3;
+                int endRemove = 1;
+                int IDStart = line.IndexOf(issueProp[0]) + issueProp[0].Length + 1; // + 2?
+                int IDEnd = line.IndexOf(issueProp[1]) - endRemove;
+                int IDLength = IDEnd - IDStart;
+                
+                int TitleStart = line.IndexOf(issueProp[1]) + issueProp[1].Length + 1;
+                int TitleEnd = line.IndexOf(issueProp[2]) - endRemove;
+                int TitleLength = TitleEnd - TitleStart;
+                
+                int DescStart = line.IndexOf(issueProp[2]) + issueProp[2].Length + 1;
+                int DescEnd = line.IndexOf(issueProp[3]) - endRemove;
+                int DescLength = DescEnd - DescStart;
+
+                int PrioStart = line.IndexOf(issueProp[3]) + issueProp[3].Length + 1;
+                int PrioEnd = line.IndexOf(issueProp[4]) - endRemove;
+                int PrioLength = PrioEnd - PrioStart;
+
+                int StatusStart = line.IndexOf(issueProp[4]) + issueProp[4].Length + 1;
+                int StatusEnd = line.IndexOf(issueProp[5]) - endRemove;
+                int StatusLength = StatusEnd - StatusStart;
+
+                int IsResStart = line.IndexOf(issueProp[5]) + issueProp[5].Length + 1;
+                int IsResLength = line.Length - IsResStart;
+
+
+                int issueID = int.Parse(line.Substring(IDStart, IDLength));
+                string issueTitle = line.Substring(TitleStart, TitleLength);
+                string issueDescription = line.Substring(DescStart, DescLength);
+                issueTitle = issueTitle.Trim();
+                issueDescription = issueDescription.Trim();
+                Priority issuePriority = (Priority)Enum.Parse(typeof(Priority), line.Substring(PrioStart, PrioLength));
+                Status issueStatus = (Status)Enum.Parse(typeof(Status), line.Substring(StatusStart, StatusLength));
+                bool isissueResolved = Boolean.Parse(line.Substring(IsResStart, IsResLength));
+
+                IssueBase newIssue = new EngineeringIssue()
+                {
+                    IssueID = issueID,
+                    IssueTitle = issueTitle,
+                    IssueDescription = issueDescription,
+                    IssuePriority = issuePriority,
+                    IssueStatus = issueStatus,
+                    isIssueResolved = isissueResolved,
+
+                };
+
+                allIssues.Add(newIssue);
+                Debug.WriteLine($"Issue Loaded: {newIssue.IssueID}");
+            }
+            return allIssues;
         }
+
+
 
         //myDataTable.WriteXml("myXmlPath.xml", XmlWriteMode.WriteSchema);
         //myDatatable.ReadXml("myXmlPath.xml");

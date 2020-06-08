@@ -64,7 +64,7 @@ namespace C8_In4Hours
             S4.PrintHello();
             S4.Lesson4_5(); // re-read, tidy Section 4
 
-            // Section 5 = Concepts // Current vid = 4.1
+            // Section 5 = Concepts
             S5.PrintHello();
             S5.Lesson5_1();
             S5.Lesson5_2();

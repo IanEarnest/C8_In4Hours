@@ -44,6 +44,11 @@ namespace C8_In4Hours
         // nullable (int?, bool? .. etc)
         int? iNull = null; 
 
+        // var 
+        var myVar = "";
+        dynamic myDy; // used for properties or returning values from a function
+        Console.WriteLine($"Var: '{nameof(varA)}', Value: {varA}, Type: {varA.GetType()}");
+
         // Anonymous collection, use like enum (myAnonymousVar.CompanyName)
         var myAnonymousVars = new { CompanyName = "Hi", Year = 2000 }; 
 
@@ -209,6 +214,25 @@ namespace C8_In4Hours
             Console.WriteLine($"var - Name: {myAnonymousVar.CompanyName}, Year: {myAnonymousVar.Year}");
             Console.WriteLine($"var int: {iMyInt}, var string: {strMyString}");
             Console.WriteLine("");
+
+
+            // Var
+            var varA = "var a";
+            var varB = 'b';
+            var varC = 3;
+            Console.WriteLine($"Var: '{nameof(varA)}', Value: {varA}, Type: {varA.GetType()}");
+            Console.WriteLine($"Var: '{nameof(varB)}', Value: {varB}, Type: {varB.GetType()}");
+            Console.WriteLine($"Var: '{nameof(varC)}', Value: {varC}, Type: {varC.GetType()}");
+
+            // Dynamic
+            // checks at runtime not compiletime
+            // used for properties or returning values from a function
+            dynamic dynA = "dyn a";
+            dynamic dynB = 'b';
+            dynamic dynC = 3;
+            Console.WriteLine($"Dynamic: '{nameof(dynA)}', Value: {dynA}, Type: {dynA.GetType()}");
+            Console.WriteLine($"Dynamic: '{nameof(dynB)}', Value: {dynB}, Type: {dynB.GetType()}");
+            Console.WriteLine($"Dynamic: '{nameof(dynC)}', Value: {dynC}, Type: {dynC.GetType()}");
         }
 
         

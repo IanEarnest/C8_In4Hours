@@ -72,6 +72,16 @@ namespace Tutorial
                XAML design (even when VS Designer is off)
 
            WinForm life = Load, Activate, Deactivate, Closing, Closed, Dispose of
+
+
+            // examples?
+            #define 
+            #if 
+            #elif 
+
+
+            //What?
+            static string F(Func<string> func) => func();
            */
     }
 }
